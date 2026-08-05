@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Diário da Cidade - Barra do Garças</title>
+    
+    <!-- Leaflet CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            background: #dcdcdc;
+        }
+        header {
+            background: black;
+            color: red;
+            text-align: center;
+            padding: 15px;
+            font-size: 1.5em;
+        }
+        #map {
+            width: 100%;
+            height: 500px;
+            border: 2px solid black;
+        }
+        .container {
+            padding: 15px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        button {
+            padding: 12px 20px;
+            margin: 5px;
+            cursor: pointer;
+            border: none;
+            background: black;
+            color: white;
+            border-radius: 5px;
+        }
+        .painel {
+            background: white;
+            padding: 20px;
+            margin: 10px 0;
+            border-radius: 8px;
+            display: none;
+        }
+        input, select, textarea {
+            width: 100%;
+            padding: 10px;
+            margin: 8px 0;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        .relato {
+            border-bottom: 1px solid #ddd;
+            padding: 12px 0;
+        }
+    </style>
+</head>
+<body>
+
+    <header>DIÁRIO DA CIDADE - Barra do Garças - MT</header>
+
+    <div class="container">
+        <button onclick="abrirPainel()">📍 Reportar Problema</button>
+        <button onclick="minhaLocalizacao()">📍 Minha Localização</button>
+
+        <!-- Mapa -->
+        <div id="map"></div>
+
+        <!-- Painel de Relato -->
+        <div id="painel" class="painel">
+            <h2>Relatar Problema</h2>
+            <form id="formulario">
+                <label>Tipo de Problema:</label>
+                <select id="tipo" onchange="mostrarOutroCampo()" required>
+                    <option value="">Selecione</option>
+                    <option>Buraco na rua</option>
+                    <option>Lixo acumulado</option>
+                    <option>Luz apagada</option>
+                    <option>Água parada</option>
+                    <option value="Outro">Outro</option>
+                </select>
+
+                <div id="campoOutro" style="display:none;">
+                    <label>Descreva o problema:</label>
+                    <input type="text" id="outroProblema" placeholder="Digite o tipo de problema">
+                </div>
+
+                <label>Descrição:</label>
+                <textarea id="descricao" rows="4" placeholder="Descreva o problema..." required></textarea>
+
+                <label>Endereço (preenchido automaticamente):</label>
+                <input type="text" id="endereco" readonly>
+
+                <button type="submit">💾 Salvar Relato</button>
+            </form>
+        </div>
+
+        <h2>Relatos Registrados</h2>
+        <div id="listaRelatos"></div>
+    </div>
+
+    <!-- Leaflet JS -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    
+    <script>
+        let map;
+        let marker;
+        let cidade = [-15.890666, -52.274151]; // Barra do Garças
+
+        // Inicializar mapa
+        function initMap() {
+            map = L.map('map').setView(cidade, 14);
+
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: '&copy; OpenStreetMap'
+            }).addTo(map);
+
+            // Clique no mapa para marcar
+            map.on('click', function(e) {
+                marcarLocal(e.latlng);
+            });
+
+            carregarRelatos();
+        }
+
+        function marcarLocal(latLng) {
+            if (marker) marker.remove();
+
+            marker = L.marker(latLng, { draggable: true }).addTo(map);
+            
+            // Atualiza endereço ao arrastar
+            marker.on('dragend', function() {
+                buscarEndereco(marker.getLatLng());
+            });
+
+            buscarEndereco(latLng);
+        }
+
+        // Buscar endereço aproximado (Nominatim)
+        async function buscarEndereco(latLng) {
+            try {
+                const res = await fetch(`https://nominatim.openstreetmap.org/reverse?lat=${latLng.lat}&lon=${latLng.lng}&format=json`);
+                const data = await res.json();
+                document.getElementById("endereco").value = data.display_name || "Endereço não encontrado";
+            } catch (e) {
+                document.getElementById("endereco").value = "Erro ao buscar endereço";
+            }
+        }
+
+        function abrirPainel() {
+            const painel = document.getElementById("painel");
+            painel.style.display = painel.style.display === "block" ? "none" : "block";
+        }
+
+        function mostrarOutroCampo() {
+            const campo = document.getElementById("campoOutro");
+            campo.style.display = document.getElementById("tipo").value === "Outro" ? "block" : "none";
+        }
+
+        function minhaLocalizacao() {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(pos => {
+                    const local = [pos.coords.latitude, pos.coords.longitude];
+                    map.setView(local, 18);
+                    marcarLocal(local);
+                }, () => alert("Não foi possível obter sua localização."));
+            }
+        }
+
+        // Salvar relato
+        document.getElementById("formulario").addEventListener("submit", function(e) {
+            e.preventDefault();
+
+            if (!marker) {
+                alert("Clique no mapa para marcar a localização!");
+                return;
+            }
+
+            let tipo = document.getElementById("tipo").value;
+            if (tipo === "Outro") {
+                tipo = document.getElementById("outroProblema").value;
+            }
+
+            const relato = {
+                tipo: tipo,
+                descricao: document.getElementById("descricao").value,
+                endereco: document.getElementById("endereco").value,
+                lat: marker.getLatLng().lat,
+                lng: marker.getLatLng().lng,
+                data: new Date().toLocaleString("pt-BR")
+            };
+
+            let relatos = JSON.parse(localStorage.getItem("relatos")) || [];
+            relatos.push(relato);
+            localStorage.setItem("relatos", JSON.stringify(relatos));
+
+            adicionarMarcador(relato);
+            mostrarRelatos();
+            
+            alert("✅ Relato salvo com sucesso!");
+            this.reset();
+            document.getElementById("campoOutro").style.display = "none";
+        });
+
+        function adicionarMarcador(relato) {
+            const marcador = L.marker([relato.lat, relato.lng]).addTo(map);
+            
+            marcador.bindPopup(`
+                <b>${relato.tipo}</b><br>
+                ${relato.descricao}<br>
+                <small>${relato.endereco}</small><br>
+                <small>${relato.data}</small>
+            `);
+        }
+
+        function carregarRelatos() {
+            let relatos = JSON.parse(localStorage.getItem("relatos")) || [];
+            relatos.forEach(relato => adicionarMarcador(relato));
+            mostrarRelatos();
+        }
+
+        function mostrarRelatos() {
+            let relatos = JSON.parse(localStorage.getItem("relatos")) || [];
+            const area = document.getElementById("listaRelatos");
+            area.innerHTML = "";
+
+            relatos.forEach(relato => {
+                area.innerHTML += `
+                    <div class="relato">
+                        <b>${relato.tipo}</b><br>
+                        ${relato.descricao}<br>
+                        <small>${relato.endereco}</small><br>
+                        <small>${relato.data}</small>
+                    </div>
+                `;
+            });
+        }
+
+        // Iniciar
+        window.onload = initMap;
+    </script>
+</body>
+</html>
