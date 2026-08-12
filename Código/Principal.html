@@ -1,249 +1,2206 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
+
 <head>
+
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Diário da Cidade - Barra do Garças</title>
-    
-    <!-- Leaflet CSS -->
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
-    
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>
+        Diário da Cidade - Barra do Garças
+    </title>
+
+
+    <!-- =====================================================
+         LEAFLET CSS
+    ====================================================== -->
+
+    <link
+        rel="stylesheet"
+        href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+    >
+
+
+    <!-- =====================================================
+         CSS
+    ====================================================== -->
+
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            background: #dcdcdc;
-        }
-        header {
-            background: black;
-            color: red;
-            text-align: center;
-            padding: 15px;
-            font-size: 1.5em;
-        }
-        #map {
-            width: 100%;
-            height: 500px;
-            border: 2px solid black;
-        }
-        .container {
-            padding: 15px;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-        button {
-            padding: 12px 20px;
-            margin: 5px;
-            cursor: pointer;
-            border: none;
-            background: black;
-            color: white;
-            border-radius: 5px;
-        }
-        .painel {
-            background: white;
-            padding: 20px;
-            margin: 10px 0;
-            border-radius: 8px;
-            display: none;
-        }
-        input, select, textarea {
-            width: 100%;
-            padding: 10px;
-            margin: 8px 0;
+
+        * {
             box-sizing: border-box;
-            border: 1px solid #ccc;
-            border-radius: 4px;
         }
+
+
+        body {
+
+            font-family:
+                Arial,
+                Helvetica,
+                sans-serif;
+
+            margin: 0;
+
+            background: #dcdcdc;
+
+            color: #222;
+        }
+
+
+        /* =====================================================
+           CABEÇALHO
+        ====================================================== */
+
+        header {
+
+            background: #000;
+
+            color: #ff0000;
+
+            text-align: center;
+
+            padding: 18px;
+
+            font-size: 1.5em;
+
+            font-weight: bold;
+
+            box-shadow:
+                0 2px 8px
+                rgba(0,0,0,0.3);
+        }
+
+
+        /* =====================================================
+           CONTAINER
+        ====================================================== */
+
+        .container {
+
+            width: 100%;
+
+            max-width: 1200px;
+
+            margin: 0 auto;
+
+            padding: 15px;
+        }
+
+
+        /* =====================================================
+           BOTÕES
+        ====================================================== */
+
+        .botoes-controle {
+
+            display: flex;
+
+            flex-wrap: wrap;
+
+            gap: 8px;
+
+            margin-bottom: 10px;
+        }
+
+
+        button {
+
+            padding:
+                12px 20px;
+
+            cursor: pointer;
+
+            border: none;
+
+            background: #000;
+
+            color: white;
+
+            border-radius: 6px;
+
+            font-weight: bold;
+
+            transition:
+                0.2s;
+        }
+
+
+        button:hover {
+
+            background: #333;
+
+            transform:
+                translateY(-1px);
+        }
+
+
+        button:active {
+
+            transform:
+                translateY(0);
+        }
+
+
+        /* =====================================================
+           STATUS
+        ====================================================== */
+
+        .status {
+
+            padding: 12px;
+
+            background: white;
+
+            border-radius: 6px;
+
+            margin-bottom: 10px;
+
+            font-weight: bold;
+
+            box-shadow:
+                0 2px 5px
+                rgba(0,0,0,0.1);
+        }
+
+
+        /* =====================================================
+           TÍTULO DO MAPA
+        ====================================================== */
+
+        .mapa-titulo {
+
+            margin:
+                10px 0 6px 0;
+        }
+
+
+        /* =====================================================
+           CONTAINER DO MAPA
+        ====================================================== */
+
+        .mapa-container {
+
+            position: relative;
+
+            width: 100%;
+
+            height: 550px;
+
+            border:
+                2px solid #000;
+
+            border-radius: 10px;
+
+            overflow: hidden;
+
+            background: #e0e0e0;
+
+            margin-bottom: 15px;
+
+            box-shadow:
+                0 4px 10px
+                rgba(0,0,0,0.2);
+        }
+
+
+        /* =====================================================
+           MAPA
+        ====================================================== */
+
+        #map {
+
+            width: 100%;
+
+            height: 100%;
+
+            cursor: grab;
+        }
+
+
+        #map:active {
+
+            cursor: grabbing;
+        }
+
+
+        #map.modo-selecao {
+
+            cursor: crosshair;
+        }
+
+
+        /* =====================================================
+           MENSAGEM SOBRE O MAPA
+        ====================================================== */
+
+        .mensagem-mapa {
+
+            position: absolute;
+
+            top: 15px;
+
+            left: 50%;
+
+            transform:
+                translateX(-50%);
+
+            z-index: 1000;
+
+            background: white;
+
+            padding:
+                10px 18px;
+
+            border-radius: 8px;
+
+            box-shadow:
+                0 3px 10px
+                rgba(0,0,0,0.3);
+
+            font-weight: bold;
+
+            text-align: center;
+
+            display: none;
+
+            width: max-content;
+
+            max-width: 90%;
+        }
+
+
+        .mapa-container.selecionando
+        .mensagem-mapa {
+
+            display: block;
+        }
+
+
+        /* =====================================================
+           PAINEL DO FORMULÁRIO
+        ====================================================== */
+
+        .painel {
+
+            background: white;
+
+            padding: 20px;
+
+            margin:
+                15px 0;
+
+            border-radius: 8px;
+
+            display: none;
+
+            box-shadow:
+                0 4px 10px
+                rgba(0,0,0,0.15);
+        }
+
+
+        .painel h2 {
+
+            margin-top: 0;
+        }
+
+
+        /* =====================================================
+           INPUTS
+        ====================================================== */
+
+        input,
+        select,
+        textarea {
+
+            width: 100%;
+
+            padding: 11px;
+
+            margin:
+                8px 0;
+
+            border:
+                1px solid #ccc;
+
+            border-radius: 5px;
+
+            font-family:
+                Arial,
+                sans-serif;
+
+            font-size: 15px;
+        }
+
+
+        textarea {
+
+            resize: vertical;
+
+            min-height: 100px;
+        }
+
+
+        input:focus,
+        select:focus,
+        textarea:focus {
+
+            outline: none;
+
+            border-color: #000;
+
+            box-shadow:
+                0 0 0 2px
+                rgba(0,0,0,0.08);
+        }
+
+
+        /* =====================================================
+           TERMO
+        ====================================================== */
+
+        .bloco-termo-juridico {
+
+            border:
+                1px solid #d32f2f;
+
+            background:
+                #fff8f8;
+
+            border-radius: 5px;
+
+            padding: 15px;
+
+            margin:
+                20px 0;
+        }
+
+
+        .titulo-termo {
+
+            color: #d32f2f;
+
+            margin-top: 0;
+
+            font-size: 16px;
+
+            font-weight: bold;
+        }
+
+
+        .texto-rolagem-termo {
+
+            max-height: 130px;
+
+            overflow-y: auto;
+
+            font-size: 13px;
+
+            background: white;
+
+            border:
+                1px solid #ddd;
+
+            padding: 10px;
+
+            text-align: justify;
+
+            margin-bottom: 10px;
+
+            line-height: 1.4;
+        }
+
+
+        /* =====================================================
+           CHECKBOX
+        ====================================================== */
+
+        .checkbox-termo {
+
+            font-size: 14px;
+
+            cursor: pointer;
+
+            display: flex;
+
+            gap: 8px;
+
+            align-items:
+                flex-start;
+
+            font-weight: bold;
+        }
+
+
+        .checkbox-termo input {
+
+            width: auto;
+
+            margin-top: 2px;
+        }
+
+
+        /* =====================================================
+           LISTA DE RELATOS
+        ====================================================== */
+
+        .lista {
+
+            margin-top: 20px;
+        }
+
+
         .relato {
-            border-bottom: 1px solid #ddd;
-            padding: 12px 0;
+
+            border:
+                1px solid #ddd;
+
+            padding: 15px;
+
+            background: white;
+
+            margin-bottom: 8px;
+
+            border-radius: 7px;
+
+            box-shadow:
+                0 2px 5px
+                rgba(0,0,0,0.08);
         }
+
+
+        .relato-tipo {
+
+            font-size: 17px;
+
+            font-weight: bold;
+
+            margin-bottom: 8px;
+        }
+
+
+        .relato p {
+
+            margin:
+                8px 0;
+        }
+
+
+        .relato small {
+
+            color: #555;
+        }
+
+
+        /* =====================================================
+           LEAFLET
+        ====================================================== */
+
+        .leaflet-container {
+
+            font-family:
+                Arial,
+                sans-serif;
+        }
+
+
+        .leaflet-popup-content {
+
+            line-height: 1.5;
+        }
+
+
+        /* =====================================================
+           RESPONSIVIDADE
+        ====================================================== */
+
+        @media (max-width: 700px) {
+
+            header {
+
+                font-size: 1.15em;
+
+                padding: 15px;
+            }
+
+
+            .container {
+
+                padding: 10px;
+            }
+
+
+            .mapa-container {
+
+                height: 450px;
+            }
+
+
+            .botoes-controle {
+
+                flex-direction: column;
+            }
+
+
+            .botoes-controle button {
+
+                width: 100%;
+            }
+
+
+            .mensagem-mapa {
+
+                font-size: 13px;
+
+                padding:
+                    8px 12px;
+            }
+        }
+
     </style>
+
 </head>
+
+
 <body>
 
-    <header>DIÁRIO DA CIDADE - Barra do Garças - MT</header>
 
-    <div class="container">
-        <button onclick="abrirPainel()">📍 Reportar Problema</button>
-        <button onclick="minhaLocalizacao()">📍 Minha Localização</button>
+<!-- =========================================================
+     CABEÇALHO
+========================================================== -->
 
-        <!-- Mapa -->
-        <div id="map"></div>
+<header>
 
-        <!-- Painel de Relato -->
-        <div id="painel" class="painel">
-            <h2>Relatar Problema</h2>
-            <form id="formulario">
-                <label>Tipo de Problema:</label>
-                <select id="tipo" onchange="mostrarOutroCampo()" required>
-                    <option value="">Selecione</option>
-                    <option>Buraco na rua</option>
-                    <option>Lixo acumulado</option>
-                    <option>Luz apagada</option>
-                    <option>Água parada</option>
-                    <option value="Outro">Outro</option>
-                </select>
+    DIÁRIO DA CIDADE
+    <br>
 
-                <div id="campoOutro" style="display:none;">
-                    <label>Descreva o problema:</label>
-                    <input type="text" id="outroProblema" placeholder="Digite o tipo de problema">
-                </div>
+    <span
+        style="
+            font-size: 0.75em;
+            color: white;
+        "
+    >
+        Barra do Garças - MT
+    </span>
 
-                <label>Descrição:</label>
-                <textarea id="descricao" rows="4" placeholder="Descreva o problema..." required></textarea>
+</header>
 
-                <label>Endereço (preenchido automaticamente):</label>
-                <input type="text" id="endereco" readonly>
 
-                <button type="submit">💾 Salvar Relato</button>
-            </form>
-        </div>
+<div class="container">
 
-        <h2>Relatos Registrados</h2>
-        <div id="listaRelatos"></div>
+
+    <!-- =====================================================
+         BOTÕES
+    ====================================================== -->
+
+    <div class="botoes-controle">
+
+        <button
+            id="btnReportar"
+            onclick="ativarModoRelatorio()"
+        >
+            📍 Reportar Problema
+        </button>
+
+
+        <button
+            onclick="minhaLocalizacao()"
+        >
+            🎯 Minha Localização
+        </button>
+
+
+        <button
+            id="btnCancelar"
+            onclick="cancelarSelecao()"
+            style="display:none;"
+        >
+            ❌ Cancelar Seleção
+        </button>
+
     </div>
 
-    <!-- Leaflet JS -->
-    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-    
-    <script>
-        let map;
-        let marker;
-        let cidade = [-15.890666, -52.274151]; // Barra do Garças
 
-        // Inicializar mapa
-        function initMap() {
-            map = L.map('map').setView(cidade, 14);
+    <!-- =====================================================
+         STATUS
+    ====================================================== -->
 
-            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-                attribution: '&copy; OpenStreetMap'
-            }).addTo(map);
+    <div
+        class="status"
+        id="status"
+    >
+        Clique em "Reportar Problema"
+        para escolher um local no mapa.
+    </div>
 
-            // Clique no mapa para marcar
-            map.on('click', function(e) {
-                marcarLocal(e.latlng);
-            });
 
-            carregarRelatos();
+    <!-- =====================================================
+         MAPA
+    ====================================================== -->
+
+    <h2 class="mapa-titulo">
+
+        🗺️ Mapa de Problemas da Cidade
+
+    </h2>
+
+
+    <div
+        class="mapa-container"
+        id="mapaContainer"
+    >
+
+        <div
+            class="mensagem-mapa"
+            id="mensagemMapa"
+        >
+
+            📍 Clique no mapa para escolher
+            o local do problema
+
+        </div>
+
+
+        <div id="map"></div>
+
+    </div>
+
+
+    <!-- =====================================================
+         PAINEL DE RELATO
+    ====================================================== -->
+
+    <div
+        id="painel"
+        class="painel"
+    >
+
+        <h2>
+            📢 Relatar Problema
+        </h2>
+
+
+        <form
+            id="formulario"
+            onsubmit="enviarParaFirebase(event)"
+        >
+
+
+            <!-- TIPO -->
+
+            <label>
+                <strong>
+                    Tipo de Problema:
+                </strong>
+            </label>
+
+
+            <select
+                id="tipo"
+                onchange="mostrarOutroCampo()"
+                required
+            >
+
+                <option value="">
+                    Selecione
+                </option>
+
+                <option value="Buraco na rua">
+                    🕳️ Buraco na rua
+                </option>
+
+                <option value="Lixo acumulado">
+                    🗑️ Lixo acumulado
+                </option>
+
+                <option value="Luz apagada">
+                    💡 Luz apagada
+                </option>
+
+                <option value="Água parada">
+                    💧 Água parada
+                </option>
+
+                <option value="Outro">
+                    ⚠️ Outro
+                </option>
+
+            </select>
+
+
+            <!-- OUTRO -->
+
+            <div
+                id="campoOutro"
+                style="display:none;"
+            >
+
+                <label>
+                    <strong>
+                        Descreva o tipo de problema:
+                    </strong>
+                </label>
+
+
+                <input
+                    type="text"
+                    id="outroProblema"
+                    placeholder="Digite o tipo de problema"
+                >
+
+            </div>
+
+
+            <!-- DESCRIÇÃO -->
+
+            <label>
+                <strong>
+                    Descrição:
+                </strong>
+            </label>
+
+
+            <textarea
+                id="descricao"
+                rows="4"
+                placeholder="Descreva os detalhes do problema..."
+                required
+            ></textarea>
+
+
+            <!-- LOCALIZAÇÃO -->
+
+            <label>
+                <strong>
+                    Localização selecionada:
+                </strong>
+            </label>
+
+
+            <input
+                type="text"
+                id="endereco"
+                placeholder="Selecione um ponto no mapa"
+                readonly
+                required
+            >
+
+
+            <!-- TERMO -->
+
+            <div
+                class="bloco-termo-juridico"
+            >
+
+                <h4 class="titulo-termo">
+
+                    Autorização de Publicação
+                    e Termo de Responsabilidade
+
+                </h4>
+
+
+                <div
+                    class="texto-rolagem-termo"
+                >
+
+                    <p>
+
+                        Ao enviar esta reclamação
+                        ao portal
+                        <strong>
+                            Diário da Cidade -
+                            Barra do Garças
+                        </strong>,
+                        você concorda com
+                        as regras abaixo:
+
+                    </p>
+
+
+                    <p>
+
+                        <strong>
+                            1. Autorização:
+                        </strong>
+
+                        Você concede direito
+                        gratuito e não exclusivo
+                        para o portal exibir
+                        publicamente este relato
+                        e sua localização.
+
+                    </p>
+
+
+                    <p>
+
+                        <strong>
+                            2. Veracidade:
+                        </strong>
+
+                        Você declara que as
+                        informações fornecidas
+                        são verdadeiras.
+
+                    </p>
+
+
+                    <p>
+
+                        <strong>
+                            3. Dados Pessoais:
+                        </strong>
+
+                        Dados pessoais
+                        eventualmente coletados
+                        devem ser tratados
+                        conforme a legislação
+                        aplicável, incluindo a LGPD.
+
+                    </p>
+
+                </div>
+
+
+                <label
+                    class="checkbox-termo"
+                >
+
+                    <input
+                        type="checkbox"
+                        id="autorizoPublicacao"
+                        required
+                    >
+
+                    <span>
+
+                        Declaro que sou o autor
+                        do relato e aceito
+                        os termos acima.
+
+                    </span>
+
+                </label>
+
+            </div>
+
+
+            <!-- BOTÕES DO FORMULÁRIO -->
+
+            <button
+                type="submit"
+            >
+                🚀 Enviar Relato
+            </button>
+
+
+            <button
+                type="button"
+                onclick="fecharPainel()"
+            >
+                Cancelar
+            </button>
+
+        </form>
+
+    </div>
+
+
+    <!-- =====================================================
+         LISTA
+    ====================================================== -->
+
+    <div class="lista">
+
+        <h2>
+            📋 Problemas registrados
+        </h2>
+
+
+        <div
+            id="listaRelatos"
+        >
+            Carregando relatos...
+        </div>
+
+    </div>
+
+</div>
+
+
+
+<!-- =========================================================
+     LEAFLET JS
+========================================================== -->
+
+<script
+    src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+></script>
+
+
+
+<!-- =========================================================
+     FIREBASE
+========================================================== -->
+
+<script type="module">
+
+    import {
+        initializeApp
+    }
+    from
+    "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+
+
+    import {
+
+        getFirestore,
+
+        collection,
+
+        addDoc,
+
+        getDocs,
+
+        serverTimestamp,
+
+        query,
+
+        orderBy
+
+    }
+    from
+    "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+
+
+    /* ========================================================
+       CONFIGURAÇÃO FIREBASE
+    ========================================================= */
+
+    const firebaseConfig = {
+
+        apiKey:
+            "SUA_API_KEY",
+
+        authDomain:
+            "SEU-PROJETO.firebaseapp.com",
+
+        projectId:
+            "SEU_PROJECT_ID",
+
+        storageBucket:
+            "SEU-PROJETO.firebasestorage.app",
+
+        messagingSenderId:
+            "SEU_SENDER_ID",
+
+        appId:
+            "SEU_APP_ID"
+
+    };
+
+
+    /* ========================================================
+       INICIALIZAR FIREBASE
+    ========================================================= */
+
+    const app =
+        initializeApp(
+            firebaseConfig
+        );
+
+
+    const db =
+        getFirestore(app);
+
+
+    window.db = db;
+
+
+
+    /* ========================================================
+       ENVIAR RELATO
+    ========================================================= */
+
+    window.enviarParaFirebase =
+        async function(event) {
+
+        event.preventDefault();
+
+
+        /* Verificar marcador */
+
+        if (!window.marker) {
+
+            alert(
+                "📍 Primeiro selecione o local no mapa."
+            );
+
+            return;
         }
 
-        function marcarLocal(latLng) {
-            if (marker) marker.remove();
 
-            marker = L.marker(latLng, { draggable: true }).addTo(map);
-            
-            // Atualiza endereço ao arrastar
-            marker.on('dragend', function() {
-                buscarEndereco(marker.getLatLng());
-            });
+        /* Verificar termo */
 
-            buscarEndereco(latLng);
+        const checkbox =
+            document.getElementById(
+                "autorizoPublicacao"
+            );
+
+
+        if (!checkbox.checked) {
+
+            alert(
+                "Você precisa aceitar os termos."
+            );
+
+            return;
         }
 
-        // Buscar endereço aproximado (Nominatim)
-        async function buscarEndereco(latLng) {
-            try {
-                const res = await fetch(`https://nominatim.openstreetmap.org/reverse?lat=${latLng.lat}&lon=${latLng.lng}&format=json`);
-                const data = await res.json();
-                document.getElementById("endereco").value = data.display_name || "Endereço não encontrado";
-            } catch (e) {
-                document.getElementById("endereco").value = "Erro ao buscar endereço";
-            }
+
+        /* Tipo */
+
+        let tipo =
+            document.getElementById(
+                "tipo"
+            ).value;
+
+
+        if (tipo === "Outro") {
+
+            tipo =
+                document.getElementById(
+                    "outroProblema"
+                ).value
+                .trim();
+
         }
 
-        function abrirPainel() {
-            const painel = document.getElementById("painel");
-            painel.style.display = painel.style.display === "block" ? "none" : "block";
+
+        if (!tipo) {
+
+            alert(
+                "Informe o tipo de problema."
+            );
+
+            return;
         }
 
-        function mostrarOutroCampo() {
-            const campo = document.getElementById("campoOutro");
-            campo.style.display = document.getElementById("tipo").value === "Outro" ? "block" : "none";
+
+        /* Coordenadas */
+
+        const posicao =
+            window.marker.getLatLng();
+
+
+        /* Objeto */
+
+        const relato = {
+
+            tipo: tipo,
+
+            descricao:
+                document
+                    .getElementById(
+                        "descricao"
+                    )
+                    .value
+                    .trim(),
+
+            endereco:
+                document
+                    .getElementById(
+                        "endereco"
+                    )
+                    .value,
+
+            lat:
+                posicao.lat,
+
+            lng:
+                posicao.lng,
+
+            termoAceito:
+                true,
+
+            dataEnvio:
+                serverTimestamp()
+
+        };
+
+
+        try {
+
+            await addDoc(
+
+                collection(
+                    db,
+                    "reclamacoes"
+                ),
+
+                relato
+
+            );
+
+
+            alert(
+                "✅ Relato enviado com sucesso!"
+            );
+
+
+            /* Limpar formulário */
+
+            document
+                .getElementById(
+                    "formulario"
+                )
+                .reset();
+
+
+            document
+                .getElementById(
+                    "campoOutro"
+                )
+                .style.display =
+                "none";
+
+
+            fecharPainel();
+
+
+            /* Atualizar relatos */
+
+            await
+                window
+                    .carregarRelatosDoFirebase();
+
+
+            document
+                .getElementById(
+                    "status"
+                )
+                .innerText =
+                "✅ Relato registrado no mapa!";
+
+
+        }
+        catch(error) {
+
+            console.error(
+                "Erro ao salvar:",
+                error
+            );
+
+
+            alert(
+                "❌ Erro ao enviar o relato.\n\nVerifique a configuração do Firebase."
+            );
+
         }
 
-        function minhaLocalizacao() {
-            if (navigator.geolocation) {
-                navigator.geolocation.getCurrentPosition(pos => {
-                    const local = [pos.coords.latitude, pos.coords.longitude];
-                    map.setView(local, 18);
-                    marcarLocal(local);
-                }, () => alert("Não foi possível obter sua localização."));
-            }
+    };
+
+
+
+    /* ========================================================
+       CARREGAR RELATOS
+    ========================================================= */
+
+    window.carregarRelatosDoFirebase =
+        async function() {
+
+        if (!window.map) {
+
+            return;
         }
 
-        // Salvar relato
-        document.getElementById("formulario").addEventListener("submit", function(e) {
-            e.preventDefault();
 
-            if (!marker) {
-                alert("Clique no mapa para marcar a localização!");
-                return;
-            }
+        try {
 
-            let tipo = document.getElementById("tipo").value;
-            if (tipo === "Outro") {
-                tipo = document.getElementById("outroProblema").value;
-            }
+            const q =
+                query(
 
-            const relato = {
-                tipo: tipo,
-                descricao: document.getElementById("descricao").value,
-                endereco: document.getElementById("endereco").value,
-                lat: marker.getLatLng().lat,
-                lng: marker.getLatLng().lng,
-                data: new Date().toLocaleString("pt-BR")
-            };
+                    collection(
+                        db,
+                        "reclamacoes"
+                    ),
 
-            let relatos = JSON.parse(localStorage.getItem("relatos")) || [];
-            relatos.push(relato);
-            localStorage.setItem("relatos", JSON.stringify(relatos));
+                    orderBy(
+                        "dataEnvio",
+                        "desc"
+                    )
 
-            adicionarMarcador(relato);
-            mostrarRelatos();
-            
-            alert("✅ Relato salvo com sucesso!");
-            this.reset();
-            document.getElementById("campoOutro").style.display = "none";
-        });
+                );
 
-        function adicionarMarcador(relato) {
-            const marcador = L.marker([relato.lat, relato.lng]).addTo(map);
-            
-            marcador.bindPopup(`
-                <b>${relato.tipo}</b><br>
-                ${relato.descricao}<br>
-                <small>${relato.endereco}</small><br>
-                <small>${relato.data}</small>
-            `);
-        }
 
-        function carregarRelatos() {
-            let relatos = JSON.parse(localStorage.getItem("relatos")) || [];
-            relatos.forEach(relato => adicionarMarcador(relato));
-            mostrarRelatos();
-        }
+            const snapshot =
+                await getDocs(q);
 
-        function mostrarRelatos() {
-            let relatos = JSON.parse(localStorage.getItem("relatos")) || [];
-            const area = document.getElementById("listaRelatos");
+
+            const area =
+                document.getElementById(
+                    "listaRelatos"
+                );
+
+
             area.innerHTML = "";
 
-            relatos.forEach(relato => {
-                area.innerHTML += `
-                    <div class="relato">
-                        <b>${relato.tipo}</b><br>
-                        ${relato.descricao}<br>
-                        <small>${relato.endereco}</small><br>
-                        <small>${relato.data}</small>
-                    </div>
-                `;
-            });
+
+            /* Remover marcadores antigos */
+
+            if (
+                window.camadasRelatos
+            ) {
+
+                window.camadasRelatos
+                    .forEach(
+                        camada => {
+
+                            window.map
+                                .removeLayer(
+                                    camada
+                                );
+
+                        }
+                    );
+
+            }
+
+
+            window.camadasRelatos = [];
+
+
+            /* Nenhum relato */
+
+            if (
+                snapshot.empty
+            ) {
+
+                area.innerHTML =
+
+                    `<div class="relato">
+                        Nenhum problema registrado ainda.
+                    </div>`;
+
+                return;
+
+            }
+
+
+            /* Percorrer relatos */
+
+            snapshot.forEach(
+                (doc) => {
+
+                    const relato =
+                        doc.data();
+
+
+                    let dataFormatada =
+                        "Data não disponível";
+
+
+                    if (
+                        relato.dataEnvio
+                    ) {
+
+                        dataFormatada =
+                            relato.dataEnvio
+                                .toDate()
+                                .toLocaleString(
+                                    "pt-BR"
+                                );
+
+                    }
+
+
+                    /* ==========================
+                       MARCADOR
+                    =========================== */
+
+                    if (
+                        typeof relato.lat ===
+                        "number" &&
+
+                        typeof relato.lng ===
+                        "number"
+                    ) {
+
+                        const marcador =
+                            L.marker(
+                                [
+                                    relato.lat,
+                                    relato.lng
+                                ]
+                            )
+                            .addTo(
+                                window.map
+                            );
+
+
+                        marcador.bindPopup(`
+
+                            <div>
+
+                                <strong>
+                                    🚨 ${relato.tipo}
+                                </strong>
+
+                                <br><br>
+
+                                ${relato.descricao}
+
+                                <br><br>
+
+                                <small>
+                                    📍 ${relato.endereco}
+                                </small>
+
+                                <br>
+
+                                <small>
+                                    📅 ${dataFormatada}
+                                </small>
+
+                            </div>
+
+                        `);
+
+
+                        window
+                            .camadasRelatos
+                            .push(
+                                marcador
+                            );
+
+                    }
+
+
+                    /* ==========================
+                       CARD
+                    =========================== */
+
+                    area.innerHTML += `
+
+                        <div class="relato">
+
+                            <div
+                                class="relato-tipo"
+                            >
+                                🚨 ${relato.tipo}
+                            </div>
+
+                            <p>
+                                ${relato.descricao}
+                            </p>
+
+                            <small>
+                                📍 ${relato.endereco}
+                            </small>
+
+                            <br>
+
+                            <small>
+                                📅 Enviado em:
+                                ${dataFormatada}
+                            </small>
+
+                        </div>
+
+                    `;
+
+                }
+            );
+
+
+        }
+        catch(error) {
+
+            console.error(
+                "Erro ao carregar relatos:",
+                error
+            );
+
+
+            document
+                .getElementById(
+                    "listaRelatos"
+                )
+                .innerHTML =
+
+                `<div class="relato">
+
+                    ❌ Não foi possível
+                    carregar os relatos.
+
+                </div>`;
+
         }
 
-        // Iniciar
-        window.onload = initMap;
-    </script>
+    };
+
+</script>
+
+
+
+<!-- =========================================================
+     MAPA E INTERAÇÃO
+========================================================== -->
+
+<script>
+
+
+    /* ========================================================
+       CONFIGURAÇÃO INICIAL
+    ========================================================= */
+
+    const barraDoGarcas = [
+
+        -15.890,
+
+        -52.256
+
+    ];
+
+
+    /* ========================================================
+       CRIAR MAPA
+    ========================================================= */
+
+    window.map =
+        L.map(
+            "map",
+            {
+
+                center:
+                    barraDoGarcas,
+
+                zoom:
+                    13,
+
+                zoomControl:
+                    true,
+
+                dragging:
+                    true,
+
+                scrollWheelZoom:
+                    true,
+
+                doubleClickZoom:
+                    true,
+
+                boxZoom:
+                    true,
+
+                keyboard:
+                    true,
+
+                touchZoom:
+                    true
+
+            }
+        );
+
+
+    /* ========================================================
+       OPENSTREETMAP
+    ========================================================= */
+
+    L.tileLayer(
+
+        "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
+
+        {
+
+            maxZoom:
+                19,
+
+            attribution:
+                '&copy; OpenStreetMap contributors'
+
+        }
+
+    )
+    .addTo(
+        window.map
+    );
+
+
+    /* ========================================================
+       VARIÁVEIS
+    ========================================================= */
+
+    window.marker =
+        null;
+
+
+    window.modoSelecao =
+        false;
+
+
+    window.camadasRelatos =
+        [];
+
+
+    /* ========================================================
+       REPORTAR PROBLEMA
+    ========================================================= */
+
+    function ativarModoRelatorio() {
+
+        window.modoSelecao =
+            true;
+
+
+        document
+            .getElementById(
+                "map"
+            )
+            .classList
+            .add(
+                "modo-selecao"
+            );
+
+
+        document
+            .getElementById(
+                "mapaContainer"
+            )
+            .classList
+            .add(
+                "selecionando"
+            );
+
+
+        document
+            .getElementById(
+                "btnCancelar"
+            )
+            .style.display =
+            "inline-block";
+
+
+        document
+            .getElementById(
+                "status"
+            )
+            .innerText =
+
+            "📍 Agora clique no mapa para marcar o local do problema.";
+
+    }
+
+
+
+    /* ========================================================
+       CLIQUE NO MAPA
+    ========================================================= */
+
+    window.map.on(
+        "click",
+        function(event) {
+
+
+            /*
+            Se não estiver reportando,
+            o mapa funciona normalmente.
+            */
+
+            if (
+                !window.modoSelecao
+            ) {
+
+                return;
+
+            }
+
+
+            const lat =
+                event.latlng.lat;
+
+
+            const lng =
+                event.latlng.lng;
+
+
+            /* Remover marcador anterior */
+
+            if (
+                window.marker
+            ) {
+
+                window.map
+                    .removeLayer(
+                        window.marker
+                    );
+
+            }
+
+
+            /* Criar marcador */
+
+            window.marker =
+                L.marker(
+
+                    [
+                        lat,
+                        lng
+                    ],
+
+                    {
+                        draggable:
+                            true
+                    }
+
+                )
+                .addTo(
+                    window.map
+                );
+
+
+            /* Popup */
+
+            window.marker
+                .bindPopup(
+                    `
+                    <strong>
+                        📍 Local selecionado
+                    </strong>
+                    <br>
+                    <small>
+                        Arraste o marcador
+                        para ajustar o ponto.
+                    </small>
+                    `
+                )
+                .openPopup();
+
+
+            /* Atualizar endereço */
+
+            atualizarEndereco(
+                lat,
+                lng
+            );
+
+
+            /* Permitir arrastar */
+
+            window.marker.on(
+                "dragend",
+                function() {
+
+                    const posicao =
+                        window.marker
+                            .getLatLng();
+
+
+                    atualizarEndereco(
+
+                        posicao.lat,
+
+                        posicao.lng
+
+                    );
+
+
+                    document
+                        .getElementById(
+                            "status"
+                        )
+                        .innerText =
+
+                        "📍 Local atualizado!";
+
+                }
+            );
+
+
+            /* Desativar modo seleção */
+
+            window.modoSelecao =
+                false;
+
+
+            document
+                .getElementById(
+                    "map"
+                )
+                .classList
+                .remove(
+                    "modo-selecao"
+                );
+
+
+            document
+                .getElementById(
+                    "mapaContainer"
+                )
+                .classList
+                .remove(
+                    "selecionando"
+                );
+
+
+            document
+                .getElementById(
+                    "btnCancelar"
+                )
+                .style.display =
+                "none";
+
+
+            /* Abrir formulário */
+
+            abrirPainel();
+
+
+            document
+                .getElementById(
+                    "status"
+                )
+                .innerText =
+
+                "✅ Local selecionado! Preencha o formulário.";
+
+        }
+    );
+
+
+
+    /* ========================================================
+       ATUALIZAR COORDENADAS
+    ========================================================= */
+
+    function atualizarEndereco(
+        lat,
+        lng
+    ) {
+
+        document
+            .getElementById(
+                "endereco"
+            )
+            .value =
+
+            `Latitude: ${lat.toFixed(6)} | Longitude: ${lng.toFixed(6)}`;
+
+    }
+
+
+
+    /* ========================================================
+       ABRIR PAINEL
+    ========================================================= */
+
+    function abrirPainel() {
+
+        document
+            .getElementById(
+                "painel"
+            )
+            .style.display =
+            "block";
+
+
+        /* Scroll até formulário */
+
+        setTimeout(
+            function() {
+
+                document
+                    .getElementById(
+                        "painel"
+                    )
+                    .scrollIntoView({
+
+                        behavior:
+                            "smooth",
+
+                        block:
+                            "start"
+
+                    });
+
+            },
+            100
+        );
+
+    }
+
+
+
+    /* ========================================================
+       FECHAR PAINEL
+    ========================================================= */
+
+    function fecharPainel() {
+
+        document
+            .getElementById(
+                "painel"
+            )
+            .style.display =
+            "none";
+
+    }
+
+
+
+    /* ========================================================
+       CANCELAR
+    ========================================================= */
+
+    function cancelarSelecao() {
+
+        window.modoSelecao =
+            false;
+
+
+        document
+            .getElementById(
+                "map"
+            )
+            .classList
+            .remove(
+                "modo-selecao"
+            );
+
+
+        document
+            .getElementById(
+                "mapaContainer"
+            )
+            .classList
+            .remove(
+                "selecionando"
+            );
+
+
+        document
+            .getElementById(
+                "btnCancelar"
+            )
+            .style.display =
+            "none";
+
+
+        document
+            .getElementById(
+                "status"
+            )
+            .innerText =
+
+            "Clique em 'Reportar Problema' para selecionar um local.";
+
+    }
+
+
+
+    /* ========================================================
+       OUTRO PROBLEMA
+    ========================================================= */
+
+    function mostrarOutroCampo() {
+
+        const tipo =
+            document
+                .getElementById(
+                    "tipo"
+                )
+                .value;
+
+
+        const campo =
+            document
+                .getElementById(
+                    "campoOutro"
+                );
+
+
+        if (
+            tipo === "Outro"
+        ) {
+
+            campo.style.display =
+                "block";
+
+
+            document
+                .getElementById(
+                    "outroProblema"
+                )
+                .required =
+                true;
+
+        }
+        else {
+
+            campo.style.display =
+                "none";
+
+
+            document
+                .getElementById(
+                    "outroProblema"
+                )
+                .required =
+                false;
+
+        }
+
+    }
+
+
+
+    /* ========================================================
+       MINHA LOCALIZAÇÃO
+    ========================================================= */
+
+    function minhaLocalizacao() {
+
+        if (
+            !navigator.geolocation
+        ) {
+
+            alert(
+                "Seu navegador não suporta geolocalização."
+            );
+
+            return;
+
+        }
+
+
+        document
+            .getElementById(
+                "status"
+            )
+            .innerText =
+
+            "📡 Obtendo sua localização...";
+
+
+        navigator
+            .geolocation
+            .getCurrentPosition(
+
+                function(position) {
+
+
+                    const lat =
+                        position
+                            .coords
+                            .latitude;
+
+
+                    const lng =
+                        position
+                            .coords
+                            .longitude;
+
+
+                    /* Centralizar */
+
+                    window.map
+                        .setView(
+
+                            [
+                                lat,
+                                lng
+                            ],
+
+                            17
+
+                        );
+
+
+                    /* Remover marcador */
+
+                    if (
+                        window.marker
+                    ) {
+
+                        window.map
+                            .removeLayer(
+                                window.marker
+                            );
+
+                    }
+
+
+                    /* Criar marcador */
+
+                    window.marker =
+                        L.marker(
+
+                            [
+                                lat,
+                                lng
+                            ],
+
+                            {
+                                draggable:
+                                    true
+                            }
+
+                        )
+                        .addTo(
+                            window.map
+                        )
+                        .bindPopup(
+                            "📍 Sua localização"
+                        )
+                        .openPopup();
+
+
+                    /* Coordenadas */
+
+                    atualizarEndereco(
+                        lat,
+                        lng
+                    );
+
+
+                    /* Arrastar */
+
+                    window.marker.on(
+                        "dragend",
+                        function() {
+
+                            const pos =
+                                window.marker
+                                    .getLatLng();
+
+
+                            atualizarEndereco(
+
+                                pos.lat,
+
+                                pos.lng
+
+                            );
+
+                        }
+                    );
+
+
+                    document
+                        .getElementById(
+                            "status"
+                        )
+                        .innerText =
+
+                        "✅ Sua localização foi encontrada!";
+
+
+                    /* Abrir formulário */
+
+                    abrirPainel();
+
+                },
+
+
+                function(error) {
+
+                    console.error(
+                        error
+                    );
+
+
+                    alert(
+                        "❌ Não foi possível obter sua localização. Permita o acesso à localização no navegador."
+                    );
+
+
+                    document
+                        .getElementById(
+                            "status"
+                        )
+                        .innerText =
+
+                        "Não foi possível obter sua localização.";
+
+                },
+
+
+                {
+
+                    enableHighAccuracy:
+                        true,
+
+                    timeout:
+                        10000,
+
+                    maximumAge:
+                        0
+
+                }
+
+            );
+
+    }
+
+
+
+    /* ========================================================
+       CORRIGIR TAMANHO DO MAPA
+    ========================================================= */
+
+    setTimeout(
+        function() {
+
+            window.map
+                .invalidateSize();
+
+        },
+        300
+    );
+
+
+    window.addEventListener(
+        "resize",
+        function() {
+
+            window.map
+                .invalidateSize();
+
+        }
+    );
+
+
+    /* ========================================================
+       CARREGAR RELATOS
+    ========================================================= */
+
+    setTimeout(
+        function() {
+
+            if (
+                window
+                    .carregarRelatosDoFirebase
+            ) {
+
+                window
+                    .carregarRelatosDoFirebase();
+
+            }
+
+        },
+        1000
+    );
+
+</script>
+
+
 </body>
+
 </html>
+```
