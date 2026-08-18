@@ -35,9 +35,7 @@
             box-sizing: border-box;
         }
 
-
         body {
-
             font-family:
                 Arial,
                 Helvetica,
@@ -50,13 +48,11 @@
             color: #222;
         }
 
-
         /* =====================================================
            CABEÇALHO
         ====================================================== */
 
         header {
-
             background: #000;
 
             color: #ff0000;
@@ -74,13 +70,11 @@
                 rgba(0,0,0,0.3);
         }
 
-
         /* =====================================================
            CONTAINER
         ====================================================== */
 
         .container {
-
             width: 100%;
 
             max-width: 1200px;
@@ -90,13 +84,11 @@
             padding: 15px;
         }
 
-
         /* =====================================================
            BOTÕES
         ====================================================== */
 
         .botoes-controle {
-
             display: flex;
 
             flex-wrap: wrap;
@@ -106,9 +98,7 @@
             margin-bottom: 10px;
         }
 
-
         button {
-
             padding:
                 12px 20px;
 
@@ -124,33 +114,34 @@
 
             font-weight: bold;
 
-            transition:
-                0.2s;
+            transition: 0.2s;
         }
 
-
         button:hover {
-
             background: #333;
 
             transform:
                 translateY(-1px);
         }
 
-
         button:active {
-
             transform:
                 translateY(0);
         }
 
+        button:disabled {
+            opacity: 0.6;
+
+            cursor: not-allowed;
+
+            transform: none;
+        }
 
         /* =====================================================
            STATUS
         ====================================================== */
 
         .status {
-
             padding: 12px;
 
             background: white;
@@ -166,24 +157,20 @@
                 rgba(0,0,0,0.1);
         }
 
-
         /* =====================================================
-           TÍTULO DO MAPA
+           TÍTULO
         ====================================================== */
 
         .mapa-titulo {
-
             margin:
                 10px 0 6px 0;
         }
 
-
         /* =====================================================
-           CONTAINER DO MAPA
+           MAPA
         ====================================================== */
 
         .mapa-container {
-
             position: relative;
 
             width: 100%;
@@ -206,13 +193,7 @@
                 rgba(0,0,0,0.2);
         }
 
-
-        /* =====================================================
-           MAPA
-        ====================================================== */
-
         #map {
-
             width: 100%;
 
             height: 100%;
@@ -220,25 +201,19 @@
             cursor: grab;
         }
 
-
         #map:active {
-
             cursor: grabbing;
         }
 
-
         #map.modo-selecao {
-
             cursor: crosshair;
         }
-
 
         /* =====================================================
            MENSAGEM SOBRE O MAPA
         ====================================================== */
 
         .mensagem-mapa {
-
             position: absolute;
 
             top: 15px;
@@ -272,20 +247,16 @@
             max-width: 90%;
         }
 
-
         .mapa-container.selecionando
         .mensagem-mapa {
-
             display: block;
         }
 
-
         /* =====================================================
-           PAINEL DO FORMULÁRIO
+           PAINEL
         ====================================================== */
 
         .painel {
-
             background: white;
 
             padding: 20px;
@@ -302,12 +273,9 @@
                 rgba(0,0,0,0.15);
         }
 
-
         .painel h2 {
-
             margin-top: 0;
         }
-
 
         /* =====================================================
            INPUTS
@@ -316,7 +284,6 @@
         input,
         select,
         textarea {
-
             width: 100%;
 
             padding: 11px;
@@ -336,19 +303,15 @@
             font-size: 15px;
         }
 
-
         textarea {
-
             resize: vertical;
 
             min-height: 100px;
         }
 
-
         input:focus,
         select:focus,
         textarea:focus {
-
             outline: none;
 
             border-color: #000;
@@ -358,13 +321,11 @@
                 rgba(0,0,0,0.08);
         }
 
-
         /* =====================================================
            TERMO
         ====================================================== */
 
         .bloco-termo-juridico {
-
             border:
                 1px solid #d32f2f;
 
@@ -379,9 +340,7 @@
                 20px 0;
         }
 
-
         .titulo-termo {
-
             color: #d32f2f;
 
             margin-top: 0;
@@ -391,10 +350,8 @@
             font-weight: bold;
         }
 
-
         .texto-rolagem-termo {
-
-            max-height: 130px;
+            max-height: 160px;
 
             overflow-y: auto;
 
@@ -414,13 +371,11 @@
             line-height: 1.4;
         }
 
-
         /* =====================================================
            CHECKBOX
         ====================================================== */
 
         .checkbox-termo {
-
             font-size: 14px;
 
             cursor: pointer;
@@ -435,27 +390,21 @@
             font-weight: bold;
         }
 
-
         .checkbox-termo input {
-
             width: auto;
 
             margin-top: 2px;
         }
 
-
         /* =====================================================
-           LISTA DE RELATOS
+           LISTA
         ====================================================== */
 
         .lista {
-
             margin-top: 20px;
         }
 
-
         .relato {
-
             border:
                 1px solid #ddd;
 
@@ -472,9 +421,7 @@
                 rgba(0,0,0,0.08);
         }
 
-
         .relato-tipo {
-
             font-size: 17px;
 
             font-weight: bold;
@@ -482,37 +429,58 @@
             margin-bottom: 8px;
         }
 
-
         .relato p {
-
             margin:
                 8px 0;
+
+            white-space:
+                pre-wrap;
+
+            word-break:
+                break-word;
         }
 
-
         .relato small {
-
             color: #555;
         }
 
+        .contador {
+            color: #555;
+
+            font-size: 14px;
+
+            margin-bottom: 10px;
+        }
+
+        /* =====================================================
+           LOADING
+        ====================================================== */
+
+        .loading {
+            padding: 15px;
+
+            background: white;
+
+            border-radius: 7px;
+
+            text-align: center;
+
+            color: #555;
+        }
 
         /* =====================================================
            LEAFLET
         ====================================================== */
 
         .leaflet-container {
-
             font-family:
                 Arial,
                 sans-serif;
         }
 
-
         .leaflet-popup-content {
-
             line-height: 1.5;
         }
-
 
         /* =====================================================
            RESPONSIVIDADE
@@ -521,39 +489,28 @@
         @media (max-width: 700px) {
 
             header {
-
                 font-size: 1.15em;
 
                 padding: 15px;
             }
 
-
             .container {
-
                 padding: 10px;
             }
 
-
             .mapa-container {
-
                 height: 450px;
             }
 
-
             .botoes-controle {
-
                 flex-direction: column;
             }
 
-
             .botoes-controle button {
-
                 width: 100%;
             }
 
-
             .mensagem-mapa {
-
                 font-size: 13px;
 
                 padding:
@@ -576,6 +533,7 @@
 <header>
 
     DIÁRIO DA CIDADE
+
     <br>
 
     <span
@@ -601,14 +559,15 @@
 
         <button
             id="btnReportar"
-            onclick="ativarModoRelatorio()"
+            type="button"
         >
             📍 Reportar Problema
         </button>
 
 
         <button
-            onclick="minhaLocalizacao()"
+            id="btnLocalizacao"
+            type="button"
         >
             🎯 Minha Localização
         </button>
@@ -616,7 +575,7 @@
 
         <button
             id="btnCancelar"
-            onclick="cancelarSelecao()"
+            type="button"
             style="display:none;"
         >
             ❌ Cancelar Seleção
@@ -658,10 +617,8 @@
             class="mensagem-mapa"
             id="mensagemMapa"
         >
-
             📍 Clique no mapa para escolher
             o local do problema
-
         </div>
 
 
@@ -684,15 +641,12 @@
         </h2>
 
 
-        <form
-            id="formulario"
-            onsubmit="enviarParaFirebase(event)"
-        >
+        <form id="formulario">
 
 
             <!-- TIPO -->
 
-            <label>
+            <label for="tipo">
                 <strong>
                     Tipo de Problema:
                 </strong>
@@ -701,7 +655,6 @@
 
             <select
                 id="tipo"
-                onchange="mostrarOutroCampo()"
                 required
             >
 
@@ -739,16 +692,19 @@
                 style="display:none;"
             >
 
-                <label>
+                <label for="outroProblema">
+
                     <strong>
                         Descreva o tipo de problema:
                     </strong>
+
                 </label>
 
 
                 <input
                     type="text"
                     id="outroProblema"
+                    maxlength="100"
                     placeholder="Digite o tipo de problema"
                 >
 
@@ -757,16 +713,19 @@
 
             <!-- DESCRIÇÃO -->
 
-            <label>
+            <label for="descricao">
+
                 <strong>
                     Descrição:
                 </strong>
+
             </label>
 
 
             <textarea
                 id="descricao"
                 rows="4"
+                maxlength="1000"
                 placeholder="Descreva os detalhes do problema..."
                 required
             ></textarea>
@@ -774,10 +733,12 @@
 
             <!-- LOCALIZAÇÃO -->
 
-            <label>
+            <label for="endereco">
+
                 <strong>
                     Localização selecionada:
                 </strong>
+
             </label>
 
 
@@ -860,7 +821,8 @@
                         eventualmente coletados
                         devem ser tratados
                         conforme a legislação
-                        aplicável, incluindo a LGPD.
+                        aplicável, incluindo
+                        a LGPD.
 
                     </p>
 
@@ -890,9 +852,10 @@
             </div>
 
 
-            <!-- BOTÕES DO FORMULÁRIO -->
+            <!-- BOTÕES -->
 
             <button
+                id="btnEnviar"
                 type="submit"
             >
                 🚀 Enviar Relato
@@ -900,8 +863,8 @@
 
 
             <button
+                id="btnFechar"
                 type="button"
-                onclick="fecharPainel()"
             >
                 Cancelar
             </button>
@@ -923,15 +886,24 @@
 
 
         <div
+            id="contadorRelatos"
+            class="contador"
+        >
+            Carregando...
+        </div>
+
+
+        <div
             id="listaRelatos"
         >
-            Carregando relatos...
+            <div class="loading">
+                🔄 Carregando relatos...
+            </div>
         </div>
 
     </div>
 
 </div>
-
 
 
 <!-- =========================================================
@@ -943,12 +915,15 @@
 ></script>
 
 
-
 <!-- =========================================================
-     FIREBASE
+     FIREBASE + APLICAÇÃO
 ========================================================== -->
 
 <script type="module">
+
+    /* ========================================================
+       IMPORTS DO FIREBASE
+    ========================================================= */
 
     import {
         initializeApp
@@ -958,51 +933,44 @@
 
 
     import {
-
         getFirestore,
-
         collection,
-
         addDoc,
-
         getDocs,
-
         serverTimestamp,
-
         query,
-
         orderBy
-
     }
     from
     "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
 
-
     /* ========================================================
-       CONFIGURAÇÃO FIREBASE
+       CONFIGURAÇÃO DO SEU FIREBASE
     ========================================================= */
 
     const firebaseConfig = {
 
         apiKey:
-            "SUA_API_KEY",
+            "AIzaSyCO1EGFVdx8Pc7yvI3IBhMFw5fpKPjpLEY",
 
         authDomain:
-            "SEU-PROJETO.firebaseapp.com",
+            "diariodacidade-40b2a.firebaseapp.com",
 
         projectId:
-            "SEU_PROJECT_ID",
+            "diariodacidade-40b2a",
 
         storageBucket:
-            "SEU-PROJETO.firebasestorage.app",
+            "diariodacidade-40b2a.firebasestorage.app",
 
         messagingSenderId:
-            "SEU_SENDER_ID",
+            "602709954057",
 
         appId:
-            "SEU_APP_ID"
+            "1:602709954057:web:b2816025163a680778b2d8",
 
+        measurementId:
+            "G-9ET7948PJY"
     };
 
 
@@ -1010,218 +978,504 @@
        INICIALIZAR FIREBASE
     ========================================================= */
 
-    const app =
-        initializeApp(
-            firebaseConfig
+    let app;
+
+    let db;
+
+
+    try {
+
+        app =
+            initializeApp(
+                firebaseConfig
+            );
+
+
+        db =
+            getFirestore(
+                app
+            );
+
+
+        window.db =
+            db;
+
+
+        console.log(
+            "✅ Firebase inicializado com sucesso."
+        );
+
+    }
+    catch (error) {
+
+        console.error(
+            "❌ Erro ao inicializar Firebase:",
+            error
         );
 
 
-    const db =
-        getFirestore(app);
+        document
+            .getElementById(
+                "status"
+            )
+            .innerText =
+            "❌ Erro ao conectar ao Firebase.";
+
+    }
 
 
-    window.db = db;
+    /* ========================================================
+       REFERÊNCIAS DO HTML
+    ========================================================= */
 
+    const formulario =
+        document.getElementById(
+            "formulario"
+        );
+
+
+    const tipoSelect =
+        document.getElementById(
+            "tipo"
+        );
+
+
+    const campoOutro =
+        document.getElementById(
+            "campoOutro"
+        );
+
+
+    const outroProblema =
+        document.getElementById(
+            "outroProblema"
+        );
+
+
+    const descricao =
+        document.getElementById(
+            "descricao"
+        );
+
+
+    const endereco =
+        document.getElementById(
+            "endereco"
+        );
+
+
+    const checkbox =
+        document.getElementById(
+            "autorizoPublicacao"
+        );
+
+
+    const listaRelatos =
+        document.getElementById(
+            "listaRelatos"
+        );
+
+
+    const contadorRelatos =
+        document.getElementById(
+            "contadorRelatos"
+        );
+
+
+    const status =
+        document.getElementById(
+            "status"
+        );
+
+
+    const btnEnviar =
+        document.getElementById(
+            "btnEnviar"
+        );
+
+
+    /* ========================================================
+       FUNÇÃO PARA ESCAPAR HTML
+    ========================================================= */
+
+    function escaparHTML(valor) {
+
+        const div =
+            document.createElement(
+                "div"
+            );
+
+
+        div.textContent =
+            valor ?? "";
+
+
+        return div.innerHTML;
+    }
+
+
+    /* ========================================================
+       DATA DO FIREBASE
+    ========================================================= */
+
+    function formatarData(timestamp) {
+
+        if (!timestamp) {
+
+            return "Data não disponível";
+
+        }
+
+
+        try {
+
+            return timestamp
+                .toDate()
+                .toLocaleString(
+                    "pt-BR"
+                );
+
+        }
+        catch {
+
+            return "Data não disponível";
+
+        }
+
+    }
 
 
     /* ========================================================
        ENVIAR RELATO
     ========================================================= */
 
-    window.enviarParaFirebase =
+    formulario.addEventListener(
+        "submit",
         async function(event) {
 
-        event.preventDefault();
+            event.preventDefault();
 
 
-        /* Verificar marcador */
+            if (!db) {
 
-        if (!window.marker) {
+                alert(
+                    "❌ Firebase não está conectado."
+                );
 
-            alert(
-                "📍 Primeiro selecione o local no mapa."
-            );
+                return;
 
-            return;
-        }
-
-
-        /* Verificar termo */
-
-        const checkbox =
-            document.getElementById(
-                "autorizoPublicacao"
-            );
+            }
 
 
-        if (!checkbox.checked) {
+            if (!window.marker) {
 
-            alert(
-                "Você precisa aceitar os termos."
-            );
+                alert(
+                    "📍 Primeiro selecione o local no mapa."
+                );
 
-            return;
-        }
+                return;
 
-
-        /* Tipo */
-
-        let tipo =
-            document.getElementById(
-                "tipo"
-            ).value;
+            }
 
 
-        if (tipo === "Outro") {
+            if (!checkbox.checked) {
 
-            tipo =
-                document.getElementById(
-                    "outroProblema"
-                ).value
-                .trim();
+                alert(
+                    "Você precisa aceitar os termos."
+                );
 
-        }
+                return;
 
-
-        if (!tipo) {
-
-            alert(
-                "Informe o tipo de problema."
-            );
-
-            return;
-        }
+            }
 
 
-        /* Coordenadas */
-
-        const posicao =
-            window.marker.getLatLng();
+            let tipo =
+                tipoSelect.value;
 
 
-        /* Objeto */
+            if (tipo === "Outro") {
 
-        const relato = {
+                tipo =
+                    outroProblema
+                        .value
+                        .trim();
 
-            tipo: tipo,
+            }
 
-            descricao:
-                document
-                    .getElementById(
-                        "descricao"
-                    )
+
+            if (!tipo) {
+
+                alert(
+                    "Informe o tipo de problema."
+                );
+
+                return;
+
+            }
+
+
+            const textoDescricao =
+                descricao
                     .value
-                    .trim(),
-
-            endereco:
-                document
-                    .getElementById(
-                        "endereco"
-                    )
-                    .value,
-
-            lat:
-                posicao.lat,
-
-            lng:
-                posicao.lng,
-
-            termoAceito:
-                true,
-
-            dataEnvio:
-                serverTimestamp()
-
-        };
+                    .trim();
 
 
-        try {
+            if (!textoDescricao) {
 
-            await addDoc(
+                alert(
+                    "Digite uma descrição."
+                );
 
-                collection(
-                    db,
-                    "reclamacoes"
-                ),
+                return;
 
-                relato
-
-            );
+            }
 
 
-            alert(
-                "✅ Relato enviado com sucesso!"
-            );
+            const posicao =
+                window.marker
+                    .getLatLng();
 
 
-            /* Limpar formulário */
+            /* =================================================
+               OBJETO QUE SERÁ SALVO
+            ================================================= */
 
-            document
-                .getElementById(
-                    "formulario"
-                )
-                .reset();
+            const relato = {
+
+                tipo:
+                    tipo,
+
+                descricao:
+                    textoDescricao,
+
+                endereco:
+                    endereco.value,
+
+                lat:
+                    Number(
+                        posicao.lat
+                    ),
+
+                lng:
+                    Number(
+                        posicao.lng
+                    ),
+
+                termoAceito:
+                    true,
+
+                dataEnvio:
+                    serverTimestamp()
+
+            };
 
 
-            document
-                .getElementById(
-                    "campoOutro"
-                )
-                .style.display =
-                "none";
+            try {
+
+                btnEnviar.disabled =
+                    true;
 
 
-            fecharPainel();
+                btnEnviar.innerText =
+                    "⏳ Enviando...";
 
 
-            /* Atualizar relatos */
-
-            await
-                window
-                    .carregarRelatosDoFirebase();
+                status.innerText =
+                    "⏳ Salvando seu relato no Firebase...";
 
 
-            document
-                .getElementById(
-                    "status"
-                )
-                .innerText =
-                "✅ Relato registrado no mapa!";
+                /* =================================================
+                   SALVAR NO FIRESTORE
+                ================================================= */
 
+                const documento =
+                    await addDoc(
+
+                        collection(
+                            db,
+                            "reclamacoes"
+                        ),
+
+                        relato
+
+                    );
+
+
+                console.log(
+                    "✅ Relato salvo:",
+                    documento.id
+                );
+
+
+                alert(
+                    "✅ Relato enviado com sucesso!"
+                );
+
+
+                /* =================================================
+                   LIMPAR FORMULÁRIO
+                ================================================= */
+
+                formulario.reset();
+
+
+                campoOutro.style.display =
+                    "none";
+
+
+                outroProblema.required =
+                    false;
+
+
+                /* =================================================
+                   REMOVER MARCADOR DE SELEÇÃO
+                ================================================= */
+
+                if (
+                    window.marker
+                ) {
+
+                    window.map
+                        .removeLayer(
+                            window.marker
+                        );
+
+
+                    window.marker =
+                        null;
+
+                }
+
+
+                fecharPainel();
+
+
+                status.innerText =
+                    "✅ Relato registrado com sucesso!";
+
+
+                /* =================================================
+                   RECARREGAR
+                ================================================= */
+
+                await
+                    carregarRelatosDoFirebase();
+
+            }
+            catch (error) {
+
+                console.error(
+                    "❌ Erro ao salvar relato:",
+                    error
+                );
+
+
+                console.error(
+                    "Código:",
+                    error.code
+                );
+
+
+                console.error(
+                    "Mensagem:",
+                    error.message
+                );
+
+
+                alert(
+                    "❌ Não foi possível enviar o relato.\n\n" +
+                    "Verifique as regras do Firestore e a configuração do Firebase."
+                );
+
+
+                status.innerText =
+                    "❌ Erro ao salvar o relato.";
+
+            }
+            finally {
+
+                btnEnviar.disabled =
+                    false;
+
+
+                btnEnviar.innerText =
+                    "🚀 Enviar Relato";
+
+            }
 
         }
-        catch(error) {
-
-            console.error(
-                "Erro ao salvar:",
-                error
-            );
-
-
-            alert(
-                "❌ Erro ao enviar o relato.\n\nVerifique a configuração do Firebase."
-            );
-
-        }
-
-    };
-
+    );
 
 
     /* ========================================================
-       CARREGAR RELATOS
+       CAMPO OUTRO
     ========================================================= */
 
-    window.carregarRelatosDoFirebase =
-        async function() {
+    tipoSelect.addEventListener(
+        "change",
+        function() {
+
+            if (
+                tipoSelect.value ===
+                "Outro"
+            ) {
+
+                campoOutro.style.display =
+                    "block";
+
+
+                outroProblema.required =
+                    true;
+
+            }
+            else {
+
+                campoOutro.style.display =
+                    "none";
+
+
+                outroProblema.required =
+                    false;
+
+
+                outroProblema.value =
+                    "";
+
+            }
+
+        }
+    );
+
+
+    /* ========================================================
+       CARREGAR RELATOS DO FIRESTORE
+    ========================================================= */
+
+    async function carregarRelatosDoFirebase() {
+
+        if (!db) {
+
+            return;
+
+        }
+
 
         if (!window.map) {
 
             return;
+
         }
 
 
         try {
+
+            listaRelatos.innerHTML =
+                `
+                <div class="loading">
+                    🔄 Carregando relatos...
+                </div>
+                `;
+
 
             const q =
                 query(
@@ -1240,19 +1494,14 @@
 
 
             const snapshot =
-                await getDocs(q);
-
-
-            const area =
-                document.getElementById(
-                    "listaRelatos"
+                await getDocs(
+                    q
                 );
 
 
-            area.innerHTML = "";
-
-
-            /* Remover marcadores antigos */
+            /* =================================================
+               REMOVER MARCADORES ANTIGOS
+            ================================================= */
 
             if (
                 window.camadasRelatos
@@ -1260,7 +1509,7 @@
 
                 window.camadasRelatos
                     .forEach(
-                        camada => {
+                        function(camada) {
 
                             window.map
                                 .removeLayer(
@@ -1273,93 +1522,123 @@
             }
 
 
-            window.camadasRelatos = [];
+            window.camadasRelatos =
+                [];
 
 
-            /* Nenhum relato */
+            contadorRelatos.innerText =
+                `${snapshot.size} problema(s) registrado(s)`;
+
+
+            /* =================================================
+               NENHUM RELATO
+            ================================================= */
 
             if (
                 snapshot.empty
             ) {
 
-                area.innerHTML =
+                listaRelatos.innerHTML =
+                    `
+                    <div class="relato">
 
-                    `<div class="relato">
-                        Nenhum problema registrado ainda.
-                    </div>`;
+                        📭 Nenhum problema
+                        registrado ainda.
+
+                    </div>
+                    `;
 
                 return;
 
             }
 
 
-            /* Percorrer relatos */
+            let htmlLista =
+                "";
+
+
+            /* =================================================
+               PERCORRER DOCUMENTOS
+            ================================================= */
 
             snapshot.forEach(
-                (doc) => {
+                function(documento) {
 
                     const relato =
-                        doc.data();
+                        documento.data();
 
 
-                    let dataFormatada =
-                        "Data não disponível";
+                    const tipoSeguro =
+                        escaparHTML(
+                            relato.tipo
+                        );
 
 
-                    if (
-                        relato.dataEnvio
-                    ) {
+                    const descricaoSegura =
+                        escaparHTML(
+                            relato.descricao
+                        );
 
-                        dataFormatada =
+
+                    const enderecoSeguro =
+                        escaparHTML(
+                            relato.endereco
+                        );
+
+
+                    const dataFormatada =
+                        formatarData(
                             relato.dataEnvio
-                                .toDate()
-                                .toLocaleString(
-                                    "pt-BR"
-                                );
-
-                    }
+                        );
 
 
-                    /* ==========================
+                    /* =========================================
                        MARCADOR
-                    =========================== */
+                    ========================================== */
 
                     if (
+
                         typeof relato.lat ===
-                        "number" &&
+                        "number"
+
+                        &&
 
                         typeof relato.lng ===
                         "number"
+
                     ) {
 
                         const marcador =
                             L.marker(
+
                                 [
                                     relato.lat,
                                     relato.lng
                                 ]
+
                             )
                             .addTo(
                                 window.map
                             );
 
 
-                        marcador.bindPopup(`
+                        marcador.bindPopup(
 
+                            `
                             <div>
 
                                 <strong>
-                                    🚨 ${relato.tipo}
+                                    🚨 ${tipoSeguro}
                                 </strong>
 
                                 <br><br>
 
-                                ${relato.descricao}
+                                ${descricaoSegura}
 
                                 <br><br>
 
                                 <small>
-                                    📍 ${relato.endereco}
+                                    📍 ${enderecoSeguro}
                                 </small>
 
                                 <br>
@@ -1369,8 +1648,9 @@
                                 </small>
 
                             </div>
+                            `
 
-                        `);
+                        );
 
 
                         window
@@ -1382,26 +1662,27 @@
                     }
 
 
-                    /* ==========================
+                    /* =========================================
                        CARD
-                    =========================== */
+                    ========================================== */
 
-                    area.innerHTML += `
+                    htmlLista +=
 
+                        `
                         <div class="relato">
 
                             <div
                                 class="relato-tipo"
                             >
-                                🚨 ${relato.tipo}
+                                🚨 ${tipoSeguro}
                             </div>
 
                             <p>
-                                ${relato.descricao}
+                                ${descricaoSegura}
                             </p>
 
                             <small>
-                                📍 ${relato.endereco}
+                                📍 ${enderecoSeguro}
                             </small>
 
                             <br>
@@ -1412,41 +1693,80 @@
                             </small>
 
                         </div>
-
-                    `;
+                        `;
 
                 }
             );
 
 
+            listaRelatos.innerHTML =
+                htmlLista;
+
+
         }
-        catch(error) {
+        catch (error) {
 
             console.error(
-                "Erro ao carregar relatos:",
+                "❌ Erro ao carregar Firestore:",
                 error
             );
 
 
-            document
-                .getElementById(
-                    "listaRelatos"
-                )
-                .innerHTML =
+            contadorRelatos.innerText =
+                "Erro ao carregar";
 
-                `<div class="relato">
+
+            listaRelatos.innerHTML =
+
+                `
+                <div class="relato">
 
                     ❌ Não foi possível
                     carregar os relatos.
 
-                </div>`;
+                    <br><br>
+
+                    <small>
+                        ${escaparHTML(error.message)}
+                    </small>
+
+                </div>
+                `;
 
         }
 
-    };
+    }
+
+
+    /* ========================================================
+       DISPONIBILIZAR FUNÇÃO GLOBAL
+    ========================================================= */
+
+    window.carregarRelatosDoFirebase =
+        carregarRelatosDoFirebase;
+
+
+    /* ========================================================
+       INICIALIZAR CARREGAMENTO
+    ========================================================= */
+
+    window.addEventListener(
+        "load",
+        function() {
+
+            setTimeout(
+                function() {
+
+                    carregarRelatosDoFirebase();
+
+                },
+                500
+            );
+
+        }
+    );
 
 </script>
-
 
 
 <!-- =========================================================
@@ -1455,9 +1775,8 @@
 
 <script>
 
-
     /* ========================================================
-       CONFIGURAÇÃO INICIAL
+       CENTRO DE BARRA DO GARÇAS
     ========================================================= */
 
     const barraDoGarcas = [
@@ -1550,6 +1869,34 @@
 
 
     /* ========================================================
+       ELEMENTOS
+    ========================================================= */
+
+    const btnReportar =
+        document.getElementById(
+            "btnReportar"
+        );
+
+
+    const btnLocalizacao =
+        document.getElementById(
+            "btnLocalizacao"
+        );
+
+
+    const btnCancelar =
+        document.getElementById(
+            "btnCancelar"
+        );
+
+
+    const btnFechar =
+        document.getElementById(
+            "btnFechar"
+        );
+
+
+    /* ========================================================
        REPORTAR PROBLEMA
     ========================================================= */
 
@@ -1579,11 +1926,7 @@
             );
 
 
-        document
-            .getElementById(
-                "btnCancelar"
-            )
-            .style.display =
+        btnCancelar.style.display =
             "inline-block";
 
 
@@ -1598,6 +1941,11 @@
     }
 
 
+    btnReportar.addEventListener(
+        "click",
+        ativarModoRelatorio
+    );
+
 
     /* ========================================================
        CLIQUE NO MAPA
@@ -1606,12 +1954,6 @@
     window.map.on(
         "click",
         function(event) {
-
-
-            /*
-            Se não estiver reportando,
-            o mapa funciona normalmente.
-            */
 
             if (
                 !window.modoSelecao
@@ -1630,7 +1972,9 @@
                 event.latlng.lng;
 
 
-            /* Remover marcador anterior */
+            /* ================================================
+               REMOVER MARCADOR ANTERIOR
+            ================================================= */
 
             if (
                 window.marker
@@ -1644,7 +1988,9 @@
             }
 
 
-            /* Criar marcador */
+            /* ================================================
+               CRIAR MARCADOR
+            ================================================= */
 
             window.marker =
                 L.marker(
@@ -1665,7 +2011,9 @@
                 );
 
 
-            /* Popup */
+            /* ================================================
+               POPUP
+            ================================================= */
 
             window.marker
                 .bindPopup(
@@ -1673,7 +2021,9 @@
                     <strong>
                         📍 Local selecionado
                     </strong>
+
                     <br>
+
                     <small>
                         Arraste o marcador
                         para ajustar o ponto.
@@ -1683,7 +2033,9 @@
                 .openPopup();
 
 
-            /* Atualizar endereço */
+            /* ================================================
+               ATUALIZAR ENDEREÇO
+            ================================================= */
 
             atualizarEndereco(
                 lat,
@@ -1691,7 +2043,9 @@
             );
 
 
-            /* Permitir arrastar */
+            /* ================================================
+               ARRASTAR MARCADOR
+            ================================================= */
 
             window.marker.on(
                 "dragend",
@@ -1723,7 +2077,9 @@
             );
 
 
-            /* Desativar modo seleção */
+            /* ================================================
+               DESATIVAR MODO
+            ================================================= */
 
             window.modoSelecao =
                 false;
@@ -1749,15 +2105,13 @@
                 );
 
 
-            document
-                .getElementById(
-                    "btnCancelar"
-                )
-                .style.display =
+            btnCancelar.style.display =
                 "none";
 
 
-            /* Abrir formulário */
+            /* ================================================
+               ABRIR FORMULÁRIO
+            ================================================= */
 
             abrirPainel();
 
@@ -1774,9 +2128,8 @@
     );
 
 
-
     /* ========================================================
-       ATUALIZAR COORDENADAS
+       ATUALIZAR LOCALIZAÇÃO
     ========================================================= */
 
     function atualizarEndereco(
@@ -1795,7 +2148,6 @@
     }
 
 
-
     /* ========================================================
        ABRIR PAINEL
     ========================================================= */
@@ -1809,8 +2161,6 @@
             .style.display =
             "block";
 
-
-        /* Scroll até formulário */
 
         setTimeout(
             function() {
@@ -1836,7 +2186,6 @@
     }
 
 
-
     /* ========================================================
        FECHAR PAINEL
     ========================================================= */
@@ -1853,9 +2202,14 @@
     }
 
 
+    btnFechar.addEventListener(
+        "click",
+        fecharPainel
+    );
+
 
     /* ========================================================
-       CANCELAR
+       CANCELAR SELEÇÃO
     ========================================================= */
 
     function cancelarSelecao() {
@@ -1884,11 +2238,7 @@
             );
 
 
-        document
-            .getElementById(
-                "btnCancelar"
-            )
-            .style.display =
+        btnCancelar.style.display =
             "none";
 
 
@@ -1903,61 +2253,10 @@
     }
 
 
-
-    /* ========================================================
-       OUTRO PROBLEMA
-    ========================================================= */
-
-    function mostrarOutroCampo() {
-
-        const tipo =
-            document
-                .getElementById(
-                    "tipo"
-                )
-                .value;
-
-
-        const campo =
-            document
-                .getElementById(
-                    "campoOutro"
-                );
-
-
-        if (
-            tipo === "Outro"
-        ) {
-
-            campo.style.display =
-                "block";
-
-
-            document
-                .getElementById(
-                    "outroProblema"
-                )
-                .required =
-                true;
-
-        }
-        else {
-
-            campo.style.display =
-                "none";
-
-
-            document
-                .getElementById(
-                    "outroProblema"
-                )
-                .required =
-                false;
-
-        }
-
-    }
-
+    btnCancelar.addEventListener(
+        "click",
+        cancelarSelecao
+    );
 
 
     /* ========================================================
@@ -1988,12 +2287,15 @@
             "📡 Obtendo sua localização...";
 
 
+        btnLocalizacao.disabled =
+            true;
+
+
         navigator
             .geolocation
             .getCurrentPosition(
 
                 function(position) {
-
 
                     const lat =
                         position
@@ -2007,7 +2309,9 @@
                             .longitude;
 
 
-                    /* Centralizar */
+                    /* =========================================
+                       CENTRALIZAR
+                    ========================================== */
 
                     window.map
                         .setView(
@@ -2022,7 +2326,9 @@
                         );
 
 
-                    /* Remover marcador */
+                    /* =========================================
+                       REMOVER MARCADOR
+                    ========================================== */
 
                     if (
                         window.marker
@@ -2036,7 +2342,9 @@
                     }
 
 
-                    /* Criar marcador */
+                    /* =========================================
+                       CRIAR MARCADOR
+                    ========================================== */
 
                     window.marker =
                         L.marker(
@@ -2061,7 +2369,9 @@
                         .openPopup();
 
 
-                    /* Coordenadas */
+                    /* =========================================
+                       COORDENADAS
+                    ========================================== */
 
                     atualizarEndereco(
                         lat,
@@ -2069,7 +2379,9 @@
                     );
 
 
-                    /* Arrastar */
+                    /* =========================================
+                       ARRASTAR
+                    ========================================== */
 
                     window.marker.on(
                         "dragend",
@@ -2101,22 +2413,36 @@
                         "✅ Sua localização foi encontrada!";
 
 
-                    /* Abrir formulário */
-
                     abrirPainel();
 
-                },
 
+                },
 
                 function(error) {
 
                     console.error(
+                        "Erro de geolocalização:",
                         error
                     );
 
 
+                    let mensagem =
+                        "❌ Não foi possível obter sua localização.";
+
+
+                    if (
+                        error.code ===
+                        1
+                    ) {
+
+                        mensagem =
+                            "❌ Permissão de localização negada. Autorize a localização no navegador.";
+
+                    }
+
+
                     alert(
-                        "❌ Não foi possível obter sua localização. Permita o acesso à localização no navegador."
+                        mensagem
                     );
 
 
@@ -2129,7 +2455,6 @@
                         "Não foi possível obter sua localização.";
 
                 },
-
 
                 {
 
@@ -2146,8 +2471,24 @@
 
             );
 
+
+        setTimeout(
+            function() {
+
+                btnLocalizacao.disabled =
+                    false;
+
+            },
+            3000
+        );
+
     }
 
+
+    btnLocalizacao.addEventListener(
+        "click",
+        minhaLocalizacao
+    );
 
 
     /* ========================================================
@@ -2176,31 +2517,9 @@
     );
 
 
-    /* ========================================================
-       CARREGAR RELATOS
-    ========================================================= */
-
-    setTimeout(
-        function() {
-
-            if (
-                window
-                    .carregarRelatosDoFirebase
-            ) {
-
-                window
-                    .carregarRelatosDoFirebase();
-
-            }
-
-        },
-        1000
-    );
-
 </script>
 
 
 </body>
 
 </html>
-```
