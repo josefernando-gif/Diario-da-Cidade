@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Diário da Cidade - Cadastro</title>
+    
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            background: #dcdcdc; /* O mesmo cinza do mapa */
+        }
+        header {
+            background: black;
+            color: red;
+            text-align: center;
+            padding: 15px;
+            font-size: 1.5em;
+            font-weight: bold;
+        }
+        .container {
+            padding: 15px;
+            max-width: 500px; /* Limitado para o formulário não ficar esticado */
+            margin: 30px auto;
+        }
+        .painel-cadastro {
+            background: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        h2 {
+            margin-top: 0;
+            color: #333;
+            border-bottom: 2px solid black;
+            padding-bottom: 10px;
+        }
+        label {
+            font-weight: bold;
+            display: block;
+            margin-top: 15px;
+            color: #444;
+        }
+        input {
+            width: 100%;
+            padding: 10px;
+            margin: 8px 0;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 1em;
+        }
+        button {
+            width: 100%;
+            padding: 12px 20px;
+            margin-top: 20px;
+            cursor: pointer;
+            border: none;
+            background: black;
+            color: white;
+            border-radius: 5px;
+            font-size: 1.1em;
+            font-weight: bold;
+            transition: background 0.2s;
+        }
+        button:hover {
+            background: #222;
+        }
+    </style>
+</head>
+<body>
+
+    <header>DIÁRIO DA CIDADE - Barra do Garças - MT</header>
+
+    <a href="Index.html"> <h1><</h1></a>
+
+    <div class="container">
+        <div class="painel-cadastro">
+            <h2>Criar Conta</h2>
+            
+            <form id="cadastroForm">
+                <label>Nome Completo:</label>
+                <input type="text" placeholder="Digite seu nome completo" required>
+
+                <label>E-mail:</label>
+                <input type="email" id="email" placeholder="exemplo@email.com" required>
+
+                <label>Senha:</label>
+                <input type="password" id="senha1" placeholder="Crie uma senha" required>
+
+                <label>Confirme a Senha:</label>
+                <input type="password" id="senha2" placeholder="Repita a senha" required>
+
+                <button type="submit">Cadastrar</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById("cadastroForm").addEventListener("submit", function(event){
+            event.preventDefault();
+
+            let email = document.getElementById("email").value;
+            let senha1 = document.getElementById("senha1").value;
+            let senha2 = document.getElementById("senha2").value;
+
+            if(senha1 === senha2){
+                localStorage.setItem("email", email);
+                localStorage.setItem("senha", senha1);
+
+                alert("✅ Cadastro realizado com sucesso!");
+
+                // Redireciona para o arquivo do mapa
+                window.location.href = "Index.html";
+            } else {
+                alert("❌ As senhas não correspondem!");
+            }
+        });
+    </script>
+
+</body>
+</html>
