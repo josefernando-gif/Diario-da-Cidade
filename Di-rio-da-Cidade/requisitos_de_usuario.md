@@ -1,5 +1,14 @@
 # Requisitos de Usuário — Diário da Cidade
 
+
+Marcar no Mapa: O cidadão seleciona o local exato do problema (buraco, quebra-molas, etc.) no mapa de Barra do Garças.
+
+Anexar Foto e Descrição: Adiciona uma foto comprovando a situação e escreve um breve relato do caso.
+
+Acompanhar e Filtrar: O usuário visualiza o status (Pendente, Em Manutenção, Resolvido) e pode filtrar problemas no mapa.
+
+Gestão e Baixa: O gestor da prefeitura atualiza o andamento do chamado e remove/encerra o registro quando o problema for resolvido.
+
 **Projeto:** Diário da Cidade — Plataforma de Denúncias Urbanas  
 **Versão:** 1.0  
 **Data:** 02 de setembro de 2026  
