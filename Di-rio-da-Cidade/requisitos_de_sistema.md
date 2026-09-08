@@ -1,5 +1,20 @@
 # Requisitos de Sistema — Diário da Cidade
+Funcionais (O que a aplicação faz):
 
+    Integração com Mapa: Carregar o mapa interativo de Barra do Garças (ex.: Google Maps ou Leaflet).
+
+    Registro de Dados: Salvar local (latitude/longitude), categoria, descrição e foto do problema no banco de dados.
+
+    Marcadores Dinâmicos: Exibir pinos no mapa sinalizando as reclamações e seus status.
+
+    Painel do Gestor: Tela restrita para a prefeitura alterar o status e dar baixa nos chamados resolvidos.
+    
+
+Não funcionais (Como o sistema opera):
+
+    Responsividade: Funcionar bem tanto em celulares quanto em computadores.
+
+    Desempenho & Disponibilidade: Carregar o mapa de forma rápida e permanecer online 24h.
 **Projeto:** Diário da Cidade — Plataforma de Denúncias Urbanas  
 **Versão:** 1.0  
 **Data:** 02 de setembro de 2026  
