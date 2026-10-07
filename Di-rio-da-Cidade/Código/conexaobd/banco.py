@@ -1,5 +1,10 @@
-import _sqlite3
+import sqlite3
+import os
 
-conexao = _sqlite3.connect('reclamaçoes.db')
+CAMINHO = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'reclamacoes.db')
 
-print("Banco de dados conectado com sucesso!")
+
+def conectadb():
+    conexao = sqlite3.connect(CAMINHO)
+    conexao.row_factory = sqlite3.Row
+    return conexao
