@@ -916,20 +916,113 @@
 
 
 <!-- =========================================================
-     APLICAÇÃO (API + SQLite)
+     FIREBASE + APLICAÇÃO
 ========================================================== -->
 
 <script type="module">
 
     /* ========================================================
-       API (SQLite via Flask)
-       Se abrir o HTML pelo próprio Flask (http://localhost:5000),
-       deixe API_URL vazio. Caso contrário use o endereço do servidor.
+       IMPORTS DO FIREBASE
     ========================================================= */
 
-    const API_URL = "";
+    import {
+        initializeApp
+    }
+    from
+    "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 
-    const db = true; // mantido para compatibilidade com as verificações abaixo
+
+    import {
+        getFirestore,
+        collection,
+        addDoc,
+        getDocs,
+        serverTimestamp,
+        query,
+        orderBy
+    }
+    from
+    "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+
+    /* ========================================================
+       CONFIGURAÇÃO DO SEU FIREBASE
+    ========================================================= */
+
+    const firebaseConfig = {
+
+        apiKey:
+            "AIzaSyCO1EGFVdx8Pc7yvI3IBhMFw5fpKPjpLEY",
+
+        authDomain:
+            "diariodacidade-40b2a.firebaseapp.com",
+
+        projectId:
+            "diariodacidade-40b2a",
+
+        storageBucket:
+            "diariodacidade-40b2a.firebasestorage.app",
+
+        messagingSenderId:
+            "602709954057",
+
+        appId:
+            "1:602709954057:web:b2816025163a680778b2d8",
+
+        measurementId:
+            "G-9ET7948PJY"
+    };
+
+
+    /* ========================================================
+       INICIALIZAR FIREBASE
+    ========================================================= */
+
+    let app;
+
+    let db;
+
+
+    try {
+
+        app =
+            initializeApp(
+                firebaseConfig
+            );
+
+
+        db =
+            getFirestore(
+                app
+            );
+
+
+        window.db =
+            db;
+
+
+        console.log(
+            "✅ Firebase inicializado com sucesso."
+        );
+
+    }
+    catch (error) {
+
+        console.error(
+            "❌ Erro ao inicializar Firebase:",
+            error
+        );
+
+
+        document
+            .getElementById(
+                "status"
+            )
+            .innerText =
+            "❌ Erro ao conectar ao Firebase.";
+
+    }
+
 
     /* ========================================================
        REFERÊNCIAS DO HTML
@@ -1022,22 +1115,33 @@
 
 
     /* ========================================================
-       DATA DO BANCO (SQLite)
+       DATA DO FIREBASE
     ========================================================= */
 
-    function formatarData(valor) {
+    function formatarData(timestamp) {
 
-        if (!valor) {
+        if (!timestamp) {
+
             return "Data não disponível";
+
         }
 
-        const data = new Date(valor);
 
-        if (isNaN(data.getTime())) {
+        try {
+
+            return timestamp
+                .toDate()
+                .toLocaleString(
+                    "pt-BR"
+                );
+
+        }
+        catch {
+
             return "Data não disponível";
+
         }
 
-        return data.toLocaleString("pt-BR");
     }
 
 
@@ -1055,7 +1159,7 @@
             if (!db) {
 
                 alert(
-                    "❌ Servidor não está conectado."
+                    "❌ Firebase não está conectado."
                 );
 
                 return;
@@ -1158,7 +1262,10 @@
                     ),
 
                 termoAceito:
-                    true
+                    true,
+
+                dataEnvio:
+                    serverTimestamp()
 
             };
 
@@ -1174,31 +1281,25 @@
 
 
                 status.innerText =
-                    "⏳ Salvando seu relato no banco de dados...";
+                    "⏳ Salvando seu relato no Firebase...";
 
 
                 /* =================================================
-                   SALVAR NO BANCO (SQLite)
+                   SALVAR NO FIRESTORE
                 ================================================= */
 
-                const resposta =
-                    await fetch(
-                        API_URL + "/api/reclamacoes",
-                        {
-                            method: "POST",
-                            headers: {
-                                "Content-Type": "application/json"
-                            },
-                            body: JSON.stringify(relato)
-                        }
+                const documento =
+                    await addDoc(
+
+                        collection(
+                            db,
+                            "reclamacoes"
+                        ),
+
+                        relato
+
                     );
 
-                if (!resposta.ok) {
-                    const erroApi = await resposta.json().catch(() => ({}));
-                    throw new Error(erroApi.erro || ("HTTP " + resposta.status));
-                }
-
-                const documento = await resposta.json();
 
                 console.log(
                     "✅ Relato salvo:",
@@ -1258,7 +1359,7 @@
                 ================================================= */
 
                 await
-                    carregarRelatos();
+                    carregarRelatosDoFirebase();
 
             }
             catch (error) {
@@ -1283,7 +1384,7 @@
 
                 alert(
                     "❌ Não foi possível enviar o relato.\n\n" +
-                    "Verifique se o servidor (servidor.py) está rodando."
+                    "Verifique as regras do Firestore e a configuração do Firebase."
                 );
 
 
@@ -1347,10 +1448,10 @@
 
 
     /* ========================================================
-       CARREGAR RELATOS DO BANCO (SQLite)
+       CARREGAR RELATOS DO FIRESTORE
     ========================================================= */
 
-    async function carregarRelatos() {
+    async function carregarRelatosDoFirebase() {
 
         if (!db) {
 
@@ -1376,26 +1477,27 @@
                 `;
 
 
-            const resposta =
-                await fetch(
-                    API_URL + "/api/reclamacoes"
+            const q =
+                query(
+
+                    collection(
+                        db,
+                        "reclamacoes"
+                    ),
+
+                    orderBy(
+                        "dataEnvio",
+                        "desc"
+                    )
+
                 );
 
-            if (!resposta.ok) {
-                throw new Error("HTTP " + resposta.status);
-            }
 
-            const lista = await resposta.json();
+            const snapshot =
+                await getDocs(
+                    q
+                );
 
-            const snapshot = {
-                size: lista.length,
-                empty: lista.length === 0,
-                forEach: function(fn) {
-                    lista.forEach(function(item) {
-                        fn({ id: item.id, data: function() { return item; } });
-                    });
-                }
-            };
 
             /* =================================================
                REMOVER MARCADORES ANTIGOS
@@ -1486,7 +1588,7 @@
 
                     const dataFormatada =
                         formatarData(
-                            relato.data_hora
+                            relato.dataEnvio
                         );
 
 
@@ -1605,7 +1707,7 @@
         catch (error) {
 
             console.error(
-                "❌ Erro ao carregar relatos:",
+                "❌ Erro ao carregar Firestore:",
                 error
             );
 
@@ -1640,8 +1742,8 @@
        DISPONIBILIZAR FUNÇÃO GLOBAL
     ========================================================= */
 
-    window.carregarRelatos =
-        carregarRelatos;
+    window.carregarRelatosDoFirebase =
+        carregarRelatosDoFirebase;
 
 
     /* ========================================================
@@ -1655,7 +1757,7 @@
             setTimeout(
                 function() {
 
-                    carregarRelatos();
+                    carregarRelatosDoFirebase();
 
                 },
                 500
