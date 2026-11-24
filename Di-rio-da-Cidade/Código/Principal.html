@@ -10,7 +10,7 @@
         content="width=device-width, initial-scale=1.0"
     >
 
-    <title>
+    <title data-i18n="titulo.principal">
         Diário da Cidade - Barra do Garças
     </title>
 
@@ -68,6 +68,14 @@
             box-shadow:
                 0 2px 8px
                 rgba(0,0,0,0.3);
+        }
+
+        header .subtitulo {
+            display: block;
+
+            font-size: 0.75em;
+
+            color: white;
         }
 
         /* =====================================================
@@ -520,6 +528,18 @@
 
     </style>
 
+
+    <!-- =====================================================
+         TEMA E IDIOMA
+    ====================================================== -->
+
+    <link
+        rel="stylesheet"
+        href="global.css"
+    >
+
+    <script src="global.js"></script>
+
 </head>
 
 
@@ -532,15 +552,13 @@
 
 <header>
 
-    DIÁRIO DA CIDADE
-
-    <br>
+    <div data-i18n="marca.titulo">
+        DIÁRIO DA CIDADE
+    </div>
 
     <span
-        style="
-            font-size: 0.75em;
-            color: white;
-        "
+        class="subtitulo"
+        data-i18n="marca.subtitulo"
     >
         Barra do Garças - MT
     </span>
@@ -560,6 +578,7 @@
         <button
             id="btnReportar"
             type="button"
+            data-i18n="principal.botao.reportar"
         >
             📍 Reportar Problema
         </button>
@@ -568,6 +587,7 @@
         <button
             id="btnLocalizacao"
             type="button"
+            data-i18n="principal.botao.localizacao"
         >
             🎯 Minha Localização
         </button>
@@ -577,6 +597,7 @@
             id="btnCancelar"
             type="button"
             style="display:none;"
+            data-i18n="principal.botao.cancelarSelecao"
         >
             ❌ Cancelar Seleção
         </button>
@@ -591,6 +612,7 @@
     <div
         class="status"
         id="status"
+        data-i18n="principal.status.inicial"
     >
         Clique em "Reportar Problema"
         para escolher um local no mapa.
@@ -601,10 +623,11 @@
          MAPA
     ====================================================== -->
 
-    <h2 class="mapa-titulo">
-
+    <h2
+        class="mapa-titulo"
+        data-i18n="principal.mapa.titulo"
+    >
         🗺️ Mapa de Problemas da Cidade
-
     </h2>
 
 
@@ -616,6 +639,7 @@
         <div
             class="mensagem-mapa"
             id="mensagemMapa"
+            data-i18n="principal.mapa.mensagem"
         >
             📍 Clique no mapa para escolher
             o local do problema
@@ -636,7 +660,7 @@
         class="painel"
     >
 
-        <h2>
+        <h2 data-i18n="principal.painel.titulo">
             📢 Relatar Problema
         </h2>
 
@@ -647,7 +671,7 @@
             <!-- TIPO -->
 
             <label for="tipo">
-                <strong>
+                <strong data-i18n="principal.tipo.label">
                     Tipo de Problema:
                 </strong>
             </label>
@@ -658,27 +682,45 @@
                 required
             >
 
-                <option value="">
+                <option
+                    value=""
+                    data-i18n="principal.tipo.selecione"
+                >
                     Selecione
                 </option>
 
-                <option value="Buraco na rua">
+                <option
+                    value="Buraco na rua"
+                    data-i18n="principal.tipo.buraco"
+                >
                     🕳️ Buraco na rua
                 </option>
 
-                <option value="Lixo acumulado">
+                <option
+                    value="Lixo acumulado"
+                    data-i18n="principal.tipo.lixo"
+                >
                     🗑️ Lixo acumulado
                 </option>
 
-                <option value="Luz apagada">
+                <option
+                    value="Luz apagada"
+                    data-i18n="principal.tipo.luz"
+                >
                     💡 Luz apagada
                 </option>
 
-                <option value="Água parada">
+                <option
+                    value="Água parada"
+                    data-i18n="principal.tipo.agua"
+                >
                     💧 Água parada
                 </option>
 
-                <option value="Outro">
+                <option
+                    value="Outro"
+                    data-i18n="principal.tipo.outro"
+                >
                     ⚠️ Outro
                 </option>
 
@@ -694,7 +736,7 @@
 
                 <label for="outroProblema">
 
-                    <strong>
+                    <strong data-i18n="principal.outro.label">
                         Descreva o tipo de problema:
                     </strong>
 
@@ -706,6 +748,7 @@
                     id="outroProblema"
                     maxlength="100"
                     placeholder="Digite o tipo de problema"
+                    data-i18n-placeholder="principal.outro.placeholder"
                 >
 
             </div>
@@ -715,7 +758,7 @@
 
             <label for="descricao">
 
-                <strong>
+                <strong data-i18n="principal.descricao.label">
                     Descrição:
                 </strong>
 
@@ -727,6 +770,7 @@
                 rows="4"
                 maxlength="1000"
                 placeholder="Descreva os detalhes do problema..."
+                data-i18n-placeholder="principal.descricao.placeholder"
                 required
             ></textarea>
 
@@ -735,7 +779,7 @@
 
             <label for="endereco">
 
-                <strong>
+                <strong data-i18n="principal.local.label">
                     Localização selecionada:
                 </strong>
 
@@ -746,6 +790,7 @@
                 type="text"
                 id="endereco"
                 placeholder="Selecione um ponto no mapa"
+                data-i18n-placeholder="principal.local.placeholder"
                 readonly
                 required
             >
@@ -757,11 +802,12 @@
                 class="bloco-termo-juridico"
             >
 
-                <h4 class="titulo-termo">
-
+                <h4
+                    class="titulo-termo"
+                    data-i18n="principal.termo.titulo"
+                >
                     Autorização de Publicação
                     e Termo de Responsabilidade
-
                 </h4>
 
 
@@ -769,7 +815,7 @@
                     class="texto-rolagem-termo"
                 >
 
-                    <p>
+                    <p data-i18n-html="principal.termo.p1">
 
                         Ao enviar esta reclamação
                         ao portal
@@ -783,7 +829,7 @@
                     </p>
 
 
-                    <p>
+                    <p data-i18n-html="principal.termo.p2">
 
                         <strong>
                             1. Autorização:
@@ -798,7 +844,7 @@
                     </p>
 
 
-                    <p>
+                    <p data-i18n-html="principal.termo.p3">
 
                         <strong>
                             2. Veracidade:
@@ -811,7 +857,7 @@
                     </p>
 
 
-                    <p>
+                    <p data-i18n-html="principal.termo.p4">
 
                         <strong>
                             3. Dados Pessoais:
@@ -839,7 +885,7 @@
                         required
                     >
 
-                    <span>
+                    <span data-i18n="principal.termo.checkbox">
 
                         Declaro que sou o autor
                         do relato e aceito
@@ -857,6 +903,7 @@
             <button
                 id="btnEnviar"
                 type="submit"
+                data-i18n="principal.enviar"
             >
                 🚀 Enviar Relato
             </button>
@@ -865,6 +912,7 @@
             <button
                 id="btnFechar"
                 type="button"
+                data-i18n="principal.cancelar"
             >
                 Cancelar
             </button>
@@ -880,7 +928,7 @@
 
     <div class="lista">
 
-        <h2>
+        <h2 data-i18n="principal.lista.titulo">
             📋 Problemas registrados
         </h2>
 
@@ -888,6 +936,7 @@
         <div
             id="contadorRelatos"
             class="contador"
+            data-i18n="principal.contador.carregando"
         >
             Carregando...
         </div>
@@ -896,7 +945,10 @@
         <div
             id="listaRelatos"
         >
-            <div class="loading">
+            <div
+                class="loading"
+                data-i18n="principal.loading"
+            >
                 🔄 Carregando relatos...
             </div>
         </div>
@@ -921,10 +973,6 @@
 
 <script type="module">
 
-    /* ========================================================
-       IMPORTS DO FIREBASE
-    ========================================================= */
-
     import {
         initializeApp
     }
@@ -946,7 +994,7 @@
 
 
     /* ========================================================
-       CONFIGURAÇÃO DO SEU FIREBASE
+       CONFIGURAÇÃO DO FIREBASE
     ========================================================= */
 
     const firebaseConfig = {
@@ -972,6 +1020,79 @@
         measurementId:
             "G-9ET7948PJY"
     };
+
+
+    /* ========================================================
+       REFERÊNCIAS DO HTML
+    ========================================================= */
+
+    const formulario =
+        document.getElementById("formulario");
+
+    const tipoSelect =
+        document.getElementById("tipo");
+
+    const campoOutro =
+        document.getElementById("campoOutro");
+
+    const outroProblema =
+        document.getElementById("outroProblema");
+
+    const descricao =
+        document.getElementById("descricao");
+
+    const endereco =
+        document.getElementById("endereco");
+
+    const checkbox =
+        document.getElementById("autorizoPublicacao");
+
+    const listaRelatos =
+        document.getElementById("listaRelatos");
+
+    const contadorRelatos =
+        document.getElementById("contadorRelatos");
+
+    const status =
+        document.getElementById("status");
+
+    const btnEnviar =
+        document.getElementById("btnEnviar");
+
+
+    /* ========================================================
+       TRADUÇÃO
+    ========================================================= */
+
+    const t = (chave, variaveis) =>
+        window.dgT
+            ? window.dgT(chave, variaveis)
+            : chave;
+
+
+    /* ========================================================
+       STATUS DINÂMICO
+    ========================================================= */
+
+    let statusAtual = {
+        chave: "principal.status.inicial",
+        variaveis: null
+    };
+
+
+    function definirStatus(chave, variaveis) {
+
+        statusAtual = {
+            chave: chave,
+            variaveis: variaveis || null
+        };
+
+        status.innerText = t(chave, variaveis);
+
+    }
+
+
+    window.definirStatus = definirStatus;
 
 
     /* ========================================================
@@ -1014,84 +1135,11 @@
         );
 
 
-        document
-            .getElementById(
-                "status"
-            )
-            .innerText =
-            "❌ Erro ao conectar ao Firebase.";
+        definirStatus(
+            "principal.status.firebaseErro"
+        );
 
     }
-
-
-    /* ========================================================
-       REFERÊNCIAS DO HTML
-    ========================================================= */
-
-    const formulario =
-        document.getElementById(
-            "formulario"
-        );
-
-
-    const tipoSelect =
-        document.getElementById(
-            "tipo"
-        );
-
-
-    const campoOutro =
-        document.getElementById(
-            "campoOutro"
-        );
-
-
-    const outroProblema =
-        document.getElementById(
-            "outroProblema"
-        );
-
-
-    const descricao =
-        document.getElementById(
-            "descricao"
-        );
-
-
-    const endereco =
-        document.getElementById(
-            "endereco"
-        );
-
-
-    const checkbox =
-        document.getElementById(
-            "autorizoPublicacao"
-        );
-
-
-    const listaRelatos =
-        document.getElementById(
-            "listaRelatos"
-        );
-
-
-    const contadorRelatos =
-        document.getElementById(
-            "contadorRelatos"
-        );
-
-
-    const status =
-        document.getElementById(
-            "status"
-        );
-
-
-    const btnEnviar =
-        document.getElementById(
-            "btnEnviar"
-        );
 
 
     /* ========================================================
@@ -1122,7 +1170,9 @@
 
         if (!timestamp) {
 
-            return "Data não disponível";
+            return t(
+                "principal.data.indisponivel"
+            );
 
         }
 
@@ -1132,13 +1182,17 @@
             return timestamp
                 .toDate()
                 .toLocaleString(
-                    "pt-BR"
+                    window.dgLocale
+                        ? window.dgLocale()
+                        : "pt-BR"
                 );
 
         }
         catch {
 
-            return "Data não disponível";
+            return t(
+                "principal.data.indisponivel"
+            );
 
         }
 
@@ -1159,7 +1213,7 @@
             if (!db) {
 
                 alert(
-                    "❌ Firebase não está conectado."
+                    t("principal.alerta.firebase")
                 );
 
                 return;
@@ -1170,7 +1224,7 @@
             if (!window.marker) {
 
                 alert(
-                    "📍 Primeiro selecione o local no mapa."
+                    t("principal.alerta.selecioneLocal")
                 );
 
                 return;
@@ -1181,7 +1235,7 @@
             if (!checkbox.checked) {
 
                 alert(
-                    "Você precisa aceitar os termos."
+                    t("principal.alerta.aceiteTermos")
                 );
 
                 return;
@@ -1206,7 +1260,7 @@
             if (!tipo) {
 
                 alert(
-                    "Informe o tipo de problema."
+                    t("principal.alerta.informeTipo")
                 );
 
                 return;
@@ -1223,7 +1277,7 @@
             if (!textoDescricao) {
 
                 alert(
-                    "Digite uma descrição."
+                    t("principal.alerta.digiteDescricao")
                 );
 
                 return;
@@ -1235,10 +1289,6 @@
                 window.marker
                     .getLatLng();
 
-
-            /* =================================================
-               OBJETO QUE SERÁ SALVO
-            ================================================= */
 
             const relato = {
 
@@ -1277,16 +1327,13 @@
 
 
                 btnEnviar.innerText =
-                    "⏳ Enviando...";
+                    t("principal.enviando");
 
 
-                status.innerText =
-                    "⏳ Salvando seu relato no Firebase...";
+                definirStatus(
+                    "principal.status.salvando"
+                );
 
-
-                /* =================================================
-                   SALVAR NO FIRESTORE
-                ================================================= */
 
                 const documento =
                     await addDoc(
@@ -1308,13 +1355,9 @@
 
 
                 alert(
-                    "✅ Relato enviado com sucesso!"
+                    t("principal.alerta.sucesso")
                 );
 
-
-                /* =================================================
-                   LIMPAR FORMULÁRIO
-                ================================================= */
 
                 formulario.reset();
 
@@ -1327,13 +1370,7 @@
                     false;
 
 
-                /* =================================================
-                   REMOVER MARCADOR DE SELEÇÃO
-                ================================================= */
-
-                if (
-                    window.marker
-                ) {
+                if (window.marker) {
 
                     window.map
                         .removeLayer(
@@ -1350,13 +1387,10 @@
                 fecharPainel();
 
 
-                status.innerText =
-                    "✅ Relato registrado com sucesso!";
+                definirStatus(
+                    "principal.status.sucesso"
+                );
 
-
-                /* =================================================
-                   RECARREGAR
-                ================================================= */
 
                 await
                     carregarRelatosDoFirebase();
@@ -1383,13 +1417,13 @@
 
 
                 alert(
-                    "❌ Não foi possível enviar o relato.\n\n" +
-                    "Verifique as regras do Firestore e a configuração do Firebase."
+                    t("principal.alerta.erroEnviar")
                 );
 
 
-                status.innerText =
-                    "❌ Erro ao salvar o relato.";
+                definirStatus(
+                    "principal.status.erroSalvar"
+                );
 
             }
             finally {
@@ -1399,7 +1433,7 @@
 
 
                 btnEnviar.innerText =
-                    "🚀 Enviar Relato";
+                    t("principal.enviar");
 
             }
 
@@ -1470,11 +1504,7 @@
         try {
 
             listaRelatos.innerHTML =
-                `
-                <div class="loading">
-                    🔄 Carregando relatos...
-                </div>
-                `;
+                `<div class="loading">${t("principal.loading")}</div>`;
 
 
             const q =
@@ -1498,10 +1528,6 @@
                     q
                 );
 
-
-            /* =================================================
-               REMOVER MARCADORES ANTIGOS
-            ================================================= */
 
             if (
                 window.camadasRelatos
@@ -1527,26 +1553,18 @@
 
 
             contadorRelatos.innerText =
-                `${snapshot.size} problema(s) registrado(s)`;
+                t(
+                    "principal.contador",
+                    { n: snapshot.size }
+                );
 
-
-            /* =================================================
-               NENHUM RELATO
-            ================================================= */
 
             if (
                 snapshot.empty
             ) {
 
                 listaRelatos.innerHTML =
-                    `
-                    <div class="relato">
-
-                        📭 Nenhum problema
-                        registrado ainda.
-
-                    </div>
-                    `;
+                    `<div class="relato">${t("principal.lista.vazio")}</div>`;
 
                 return;
 
@@ -1556,10 +1574,6 @@
             let htmlLista =
                 "";
 
-
-            /* =================================================
-               PERCORRER DOCUMENTOS
-            ================================================= */
 
             snapshot.forEach(
                 function(documento) {
@@ -1591,10 +1605,6 @@
                             relato.dataEnvio
                         );
 
-
-                    /* =========================================
-                       MARCADOR
-                    ========================================== */
 
                     if (
 
@@ -1662,10 +1672,6 @@
                     }
 
 
-                    /* =========================================
-                       CARD
-                    ========================================== */
-
                     htmlLista +=
 
                         `
@@ -1688,7 +1694,7 @@
                             <br>
 
                             <small>
-                                📅 Enviado em:
+                                ${t("principal.card.enviado")}
                                 ${dataFormatada}
                             </small>
 
@@ -1702,7 +1708,6 @@
             listaRelatos.innerHTML =
                 htmlLista;
 
-
         }
         catch (error) {
 
@@ -1713,7 +1718,7 @@
 
 
             contadorRelatos.innerText =
-                "Erro ao carregar";
+                t("principal.lista.erroContador");
 
 
             listaRelatos.innerHTML =
@@ -1721,8 +1726,7 @@
                 `
                 <div class="relato">
 
-                    ❌ Não foi possível
-                    carregar os relatos.
+                    ${t("principal.lista.erro")}
 
                     <br><br>
 
@@ -1744,6 +1748,26 @@
 
     window.carregarRelatosDoFirebase =
         carregarRelatosDoFirebase;
+
+
+    /* ========================================================
+       REAGIR À MUDANÇA DE IDIOMA
+    ========================================================= */
+
+    window.addEventListener(
+        "dg:idioma",
+        function() {
+
+            definirStatus(
+                statusAtual.chave,
+                statusAtual.variaveis
+            );
+
+
+            carregarRelatosDoFirebase();
+
+        }
+    );
 
 
     /* ========================================================
@@ -1786,6 +1810,44 @@
         -52.256
 
     ];
+
+
+    /* ========================================================
+       TRADUÇÃO
+    ========================================================= */
+
+    function dgTexto(chave, variaveis) {
+
+        return window.dgT
+            ? window.dgT(chave, variaveis)
+            : chave;
+
+    }
+
+
+    function setStatus(chave, variaveis) {
+
+        if (window.definirStatus) {
+
+            window.definirStatus(chave, variaveis);
+
+        }
+        else {
+
+            const elemento =
+                document.getElementById("status");
+
+
+            if (elemento) {
+
+                elemento.innerText =
+                    dgTexto(chave, variaveis);
+
+            }
+
+        }
+
+    }
 
 
     /* ========================================================
@@ -1930,13 +1992,9 @@
             "inline-block";
 
 
-        document
-            .getElementById(
-                "status"
-            )
-            .innerText =
-
-            "📍 Agora clique no mapa para marcar o local do problema.";
+        setStatus(
+            "principal.status.agoraClique"
+        );
 
     }
 
@@ -1972,10 +2030,6 @@
                 event.latlng.lng;
 
 
-            /* ================================================
-               REMOVER MARCADOR ANTERIOR
-            ================================================= */
-
             if (
                 window.marker
             ) {
@@ -1987,10 +2041,6 @@
 
             }
 
-
-            /* ================================================
-               CRIAR MARCADOR
-            ================================================= */
 
             window.marker =
                 L.marker(
@@ -2011,41 +2061,28 @@
                 );
 
 
-            /* ================================================
-               POPUP
-            ================================================= */
-
             window.marker
                 .bindPopup(
                     `
                     <strong>
-                        📍 Local selecionado
+                        ${dgTexto("principal.popup.selecionado")}
                     </strong>
 
                     <br>
 
                     <small>
-                        Arraste o marcador
-                        para ajustar o ponto.
+                        ${dgTexto("principal.popup.arraste")}
                     </small>
                     `
                 )
                 .openPopup();
 
 
-            /* ================================================
-               ATUALIZAR ENDEREÇO
-            ================================================= */
-
             atualizarEndereco(
                 lat,
                 lng
             );
 
-
-            /* ================================================
-               ARRASTAR MARCADOR
-            ================================================= */
 
             window.marker.on(
                 "dragend",
@@ -2065,21 +2102,13 @@
                     );
 
 
-                    document
-                        .getElementById(
-                            "status"
-                        )
-                        .innerText =
-
-                        "📍 Local atualizado!";
+                    setStatus(
+                        "principal.status.localAtualizado"
+                    );
 
                 }
             );
 
-
-            /* ================================================
-               DESATIVAR MODO
-            ================================================= */
 
             window.modoSelecao =
                 false;
@@ -2109,20 +2138,12 @@
                 "none";
 
 
-            /* ================================================
-               ABRIR FORMULÁRIO
-            ================================================= */
-
             abrirPainel();
 
 
-            document
-                .getElementById(
-                    "status"
-                )
-                .innerText =
-
-                "✅ Local selecionado! Preencha o formulário.";
+            setStatus(
+                "principal.status.localSelecionado"
+            );
 
         }
     );
@@ -2242,13 +2263,9 @@
             "none";
 
 
-        document
-            .getElementById(
-                "status"
-            )
-            .innerText =
-
-            "Clique em 'Reportar Problema' para selecionar um local.";
+        setStatus(
+            "principal.status.cancelado"
+        );
 
     }
 
@@ -2270,7 +2287,7 @@
         ) {
 
             alert(
-                "Seu navegador não suporta geolocalização."
+                dgTexto("principal.alerta.semGeo")
             );
 
             return;
@@ -2278,13 +2295,9 @@
         }
 
 
-        document
-            .getElementById(
-                "status"
-            )
-            .innerText =
-
-            "📡 Obtendo sua localização...";
+        setStatus(
+            "principal.status.obtendoLocal"
+        );
 
 
         btnLocalizacao.disabled =
@@ -2309,10 +2322,6 @@
                             .longitude;
 
 
-                    /* =========================================
-                       CENTRALIZAR
-                    ========================================== */
-
                     window.map
                         .setView(
 
@@ -2326,10 +2335,6 @@
                         );
 
 
-                    /* =========================================
-                       REMOVER MARCADOR
-                    ========================================== */
-
                     if (
                         window.marker
                     ) {
@@ -2341,10 +2346,6 @@
 
                     }
 
-
-                    /* =========================================
-                       CRIAR MARCADOR
-                    ========================================== */
 
                     window.marker =
                         L.marker(
@@ -2364,24 +2365,18 @@
                             window.map
                         )
                         .bindPopup(
-                            "📍 Sua localização"
+                            dgTexto(
+                                "principal.popup.suaLocalizacao"
+                            )
                         )
                         .openPopup();
 
-
-                    /* =========================================
-                       COORDENADAS
-                    ========================================== */
 
                     atualizarEndereco(
                         lat,
                         lng
                     );
 
-
-                    /* =========================================
-                       ARRASTAR
-                    ========================================== */
 
                     window.marker.on(
                         "dragend",
@@ -2404,17 +2399,12 @@
                     );
 
 
-                    document
-                        .getElementById(
-                            "status"
-                        )
-                        .innerText =
-
-                        "✅ Sua localização foi encontrada!";
+                    setStatus(
+                        "principal.status.localEncontrada"
+                    );
 
 
                     abrirPainel();
-
 
                 },
 
@@ -2427,7 +2417,9 @@
 
 
                     let mensagem =
-                        "❌ Não foi possível obter sua localização.";
+                        dgTexto(
+                            "principal.alerta.geoErro"
+                        );
 
 
                     if (
@@ -2436,7 +2428,9 @@
                     ) {
 
                         mensagem =
-                            "❌ Permissão de localização negada. Autorize a localização no navegador.";
+                            dgTexto(
+                                "principal.alerta.geoNegada"
+                            );
 
                     }
 
@@ -2446,13 +2440,9 @@
                     );
 
 
-                    document
-                        .getElementById(
-                            "status"
-                        )
-                        .innerText =
-
-                        "Não foi possível obter sua localização.";
+                    setStatus(
+                        "principal.status.localNaoEncontrada"
+                    );
 
                 },
 
@@ -2515,7 +2505,6 @@
 
         }
     );
-
 
 </script>
 
